@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminMedpartsController;
 use App\Http\Controllers\AdminPenontonController;
 use App\Http\Controllers\AdminPresenceController;
 use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminSponsorshipsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PanitiaController;
@@ -24,12 +25,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::prefix('/')
     ->middleware(['auth', 'is_user', 'verified'])
     ->group(function () {
-        Route::get('/', [HomeController::class, 'index'])->name('home');
-
         Route::post('contactMedpart', [HomeController::class, 'sendMedpart'])->name('contactMedpart');
         Route::post('contactSponsor', [HomeController::class, 'sendSponsorship'])->name('contactSponsor');
 
@@ -44,11 +43,17 @@ Route::prefix('/')
         Route::post('buyTicket', [TicketController::class, "buyTicket"])->name('buyTicket');
     });
 
-
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'loginpage')->name('login');
+    Route::get('/register', 'registerpage')->name('register');
+    Route::post('/login', 'loginmethod');
+    Route::post('/register', 'registermethod')->name('registermethod');
+    Route::post('/logout', 'logoutmethod')->name('logout');
+});
 
 
 Route::prefix('admin')
-    ->middleware(['auth', 'is_admin', 'verified'])
+    // ->middleware(['auth', 'is_admin', 'verified'])
     ->group(function () {
         // dashboard
         Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
@@ -91,4 +96,3 @@ Route::prefix('admin')
         Route::resource('Voucher', VoucherController::class);
     });
 
-Auth::routes(["verify" => true]);
