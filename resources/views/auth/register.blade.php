@@ -19,20 +19,20 @@
                 <div class="input-box">
                    
                    <header>Welcome Back to <span class="text-danger">AOM</span></header>
-                   <form action="{{route('register')}}" method="get">
+                   <form action="{{route('register')}}" method="post">
                     @csrf
 
                     <div class="input-field">
-                        <input type="text" class="input" id="username" required value="{{ old('username') }}" autocomplete="off" autofocus>
+                        <input type="text" class="input" id="username" required name="name" value="{{ old('username') }}" autocomplete="off" autofocus>
                         <label for="username">Username</label> 
         
                     </div> 
                    <div class="input-field">
-                        <input type="text" class="input" id="email" value="{{ old('email') }}" required autocomplete="off">
+                        <input type="text" class="input" id="email" name="email" value="{{ old('email') }}" required autocomplete="off">
                         <label for="email">Email</label> 
                     </div> 
                    <div class="input-field">
-                        <input type="password" class="input" value="{{ old('password') }}" id="pass" required>
+                        <input type="password" class="input" name="password" value="{{ old('password') }}" id="pass" required>
                         <label for="pass">Password</label>
                     </div> 
                     
@@ -45,7 +45,7 @@
                     <span>Already have an account? <a href="{{route('login')}}">Log in here</a></span>
                    </div>
                    <div class="signin pb-lg-5">
-                    <span>Back to<a href="{{route('/')}}"> Home</a></span>
+                    <span>Back to<a href="{{route('home')}}"> Home</a></span>
                    </div>
                 </div>  
             </div>

@@ -85,31 +85,58 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
-                            <div class="row text-black">
+                            <div class="container text-black">
                                 <hr>
-                                <div class="col-11">
-                                    <p class="float-end fw-bold">Total: {{ $data->total_prices }}</p>
+                                <div class="row">
+                                    <div class="form-group row font-weight-bold">
+                                        <label for="staticEmail"
+                                            class="col-sm-4 col-5 col-form-label text-wrap">Harga Ticket</label>
+                                        <div class="col-sm-8 col-7">
+                                            <p class="form-control-plaintext text-end font-weight-bold">
+                                               Rp. @currency($data->ticket_price)</p>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="form-group row font-weight-bold">
+                                        <label for="staticEmail"
+                                            class="col-sm-4 col-5 col-form-label text-wrap">Biaya Admin</label>
+                                        <div class="col-sm-8 col-7">
+                                            <p class="form-control-plaintext text-end font-weight-bold">
+                                                Rp. @currency($data->midtrans_fee)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group row font-weight-bold">
+                                        <label for="staticEmail"
+                                            class="col-sm-4 col-5 col-form-label text-wrap">Harga Diskon</label>
+                                        <div class="col-sm-8 col-7">
+                                            <p class="form-control-plaintext text-end font-weight-bold">
+                                                Rp. @currency($data->voucher_discount)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group row font-weight-bold">
+                                        <label for="staticEmail"
+                                            class="col-sm-4 col-5 col-form-label text-wrap fw-bold">Total Harga</label>
+                                        <div class="col-sm-8 col-7">
+                                            <p class="form-control-plaintext text-end fw-bold">
+                                                Rp. @currency($data->total_prices)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <hr>
                             </div>
-                            <div class="text-center">
-                                {!! DNS1D::getBarcodeSVG($data->id_transaction, 'C128', 0.8, 60) !!}
-                            </div>
-                            <br>
                             <div class="form-group text-center">
                                 <div class="text-center">
                                     @if($data->status == "unpaid")
                                     <button id="pay-btn">Bayar Sekarang</button>
                                     @endif
-                                    <span class="badge text-bg-primary">
-                                        @if($data->presence == 0) Scan Barcode
-                                        @elseif($data->presence == 1) Sudah digunakan
-                                        @else Kesalahan
-                                        @endif
-                                    @endif</span>
+                                   
 
                                 </div>
                             </div>
@@ -119,7 +146,6 @@
             </div>
         </div>
     </div>
-
     </div>
     <!-- <section class="verifikasi">
       <div class="container d-flex justify-content-center align-items-center" style="height: 50vh;">
@@ -130,7 +156,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js"
+    <script type="text/javascript" src="{{config('midtrans.snap_url')}}"
         data-client-key="{{ config('midtrans.client_key') }}"></script>
     <script type="text/javascript">
         // For example trigger on button clicked, or any time you need
@@ -142,17 +168,14 @@
                 onSuccess: function(result) {
                     /* You may add your own implementation here */
                     alert("payment success!");
-                    console.log(result);
                 },
                 onPending: function(result) {
                     /* You may add your own implementation here */
                     alert("wating your payment!");
-                    console.log(result);
                 },
                 onError: function(result) {
                     /* You may add your own implementation here */
                     alert("payment failed!");
-                    console.log(result);
                 },
                 onClose: function() {
                     /* You may add your own implementation here */

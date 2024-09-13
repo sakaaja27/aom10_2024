@@ -24,11 +24,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('/')
     ->middleware(['auth', 'is_user', 'verified'])
     ->group(function () {
-        Route::get('/', [HomeController::class, 'index'])->name('home');
 
         Route::post('contactMedpart', [HomeController::class, 'sendMedpart'])->name('contactMedpart');
         Route::post('contactSponsor', [HomeController::class, 'sendSponsorship'])->name('contactSponsor');
