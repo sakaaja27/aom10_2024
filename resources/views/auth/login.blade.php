@@ -15,21 +15,21 @@
             </div>
 
             <div class="col-md-6 right">
-                
+
                 <div class="input-box">
-                   
+
                    <header>Welcome Back to <span class="text-danger">AOM</span></header>
                     <form action="{{ route('login') }}" method="post">
                         @csrf
                         <div class="input-field">
-                             <input type="text" class="input @error('name') is-invalid @enderror" id="name" name="name" required="" autocomplete="off">
-                             <label for="name">Username</label>
+                             <input type="email" class="input @error('name') is-invalid @enderror" id="name" name="email" required="" autocomplete="off">
+                             <label for="name">Email</label>
                              @error('name')
                              <span class="invalid-feedback" role="alert">
                                  <strong>{{ $message }}</strong>
                              </span>
-                         @enderror 
-                         </div> 
+                         @enderror
+                         </div>
                         <div class="input-field">
                              <input type="password" class="input @error('password') is-invalid @enderror" id="pass" name="password" required="">
                              <label for="pass">Password</label>
@@ -38,7 +38,7 @@
                                  <strong>{{ $message }}</strong>
                              </span>
                          @enderror
-                         </div> 
+                         </div>
                          <div class="forgot">
                             <span> @if (Route::has('password.request'))
                                 Lupa kata sandi?<a class="" href="{{ route('password.request') }}">
@@ -47,9 +47,9 @@
                             @endif</span>
                             </div>
                         <div class="input-field">
-                             
+
                              <input type="submit" class="submit" value="Sign In">
-                        </div> 
+                        </div>
                         <div class="signin">
                          <span>Don't have an account? <a href="{{route('register')}}">Sign Up here</a></span>
                         </div>
@@ -57,7 +57,7 @@
                          <span>Back to<a href="{{route('home')}}"> Home</a></span>
                         </div>
                     </form>
-                </div>  
+                </div>
             </div>
         </div>
     </div>
