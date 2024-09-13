@@ -14,14 +14,17 @@ class Transaction extends Model
     protected $fillable = [
         "id_transaction",
         "id_user",
+        "no_telp",
         "id_ticket",
-        "payment_method",
         "id_panitia",
+        "ticket_price",
+        "midtrans_fee",
+        "voucher_discount",
         "total_prices",
         "id_voucher",
+        "payment_method",
         "confirmation",
         "presence",
-        "bukti_transaksi",
         "created_at",
         "updated_at"
     ];

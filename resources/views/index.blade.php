@@ -109,7 +109,7 @@
 				</div>
 			  </div>
 			  <div class="col-md-12 col-sm-6 col-xs-12 ">
-				<a class="btn btn-danger btn-sm round" href="@guest {{route('login')}} @else {{route('ticketPage')}} @endguest" >Buy Ticket</a>
+				<a class="btn btn-danger btn-sm round" href="#ticket" >Buy Ticket</a>
 			  </div>
 			</div>
 		  </div>
