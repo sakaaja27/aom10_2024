@@ -5,13 +5,46 @@ use App\Models\transaction;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserConfirmMail;
 use App\Models\User;
+use Midtrans\Config;
 
 class transactionService{
     public function gettransactionbyidandemail($idtransaction,$email){
-        $data = transaction::with('user','ticket')->limit(1)->where('id_transaction',$idtransaction)->where('confirmation',2)->orwhereHas('user', function ($query) use ($email) {
+        $data = transaction::with('user','ticket')->limit(1)->where('id_transaction',$idtransaction)->orwhereHas('user', function ($query) use ($email) {
             $query->where('email', $email);
         });
             return $data;
+    }
+    public function gettransactionwithmidtrans($idtransaction){
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        // dd($transactionId);
+        $response = \Midtrans\Transaction::status($idtransaction);
+        // dd($response);
+
+        if ($response->status_code == 200) {
+            $transactionData = [
+                'status_code' => $response->status_code ?? null,
+                'status_message' => $response->status_message ?? null,
+                'transaction_id' => $response->transaction_id ?? null,
+                'order_id' => $response->order_id ?? null,
+                'gross_amount' => $response->gross_amount ?? null,
+                'currency' => $response->currency ?? null,
+                'payment_type' => $response->payment_type ?? null,
+                'transaction_status' => $response->transaction_status ?? null,
+                'signature_key' => $response->signature_key ?? null,
+                'fraud_status' => $response->fraud_status ?? null,
+                'merchant_id' => $response->merchant_id ?? null,
+                'transaction_type' => $response->transaction_type ?? null,
+                'issuer' => $response->issuer ?? null,
+                'acquirer' => $response->acquirer ?? null,
+                'transaction_time' => $response->transaction_time ?? null,
+                'settlement_time' => $response->settlement_time ?? null,
+                'expiry_time' => $response->expiry_time ?? null,
+            ];
+            return $transactionData;
+        }
+
+        return null;
     }
     public function gettransaction(){
         $data = transaction::with('user','ticket','voucher','panitia');

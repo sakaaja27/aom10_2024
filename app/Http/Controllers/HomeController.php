@@ -26,7 +26,7 @@ class HomeController extends Controller
         // dd($ticket);
         return view('index', compact('post', 'ticket'));
     }
-    
+
     function sendMedpart()
     {
         return Redirect::away('https://wa.me/6281217126005');

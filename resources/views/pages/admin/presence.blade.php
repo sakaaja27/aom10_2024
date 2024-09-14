@@ -33,7 +33,7 @@
                         <div class="col-sm-10">
                             <input tabindex="1" type="text" class="form-control" name="code" id="code"
                                 placeholder="Masukan Barcode Pengguna" autocomplete="off" autofocus="true"
-                                onkeyup="if(this.value.length >= 9) {getdatauser($('#data-form'))}"
+                                onkeyup="if(this.value.length >= 10) {getdatauser($('#data-form'))}"
                                 onfocus="this.form.reset()">
                         </div>
                     </div>

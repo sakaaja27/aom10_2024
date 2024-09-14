@@ -23,14 +23,23 @@ class LoginController extends Controller
     public function loginmethod(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users',
             'password' => 'required|min:8',
         ]);
-
         $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended(RouteServiceProvider::HOME);
+        // Check if the email is verified
+        $user = User::where('email', $credentials['email'])->first();
+        // Attempt to authenticate with password hashing
+        if (Hash::check($request->password, $user->password)) {
+            Auth::login($user);
+            // Check user role
+            if (Auth::user()->role === 'ADMIN') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('home');
+            }
+        } else {
+            return redirect()->back()->withErrors(['password' => 'Invalid credentials.']);
         }
     }
     public function registermethod(Request $request)

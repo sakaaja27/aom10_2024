@@ -17,12 +17,10 @@ class AdminDashboardController extends Controller
      */
     public function index(TransactionService $transactionService, UserService $userservice)
     {
-        $ticketblmdikonfirms = $transactionService->gettransaction()->where('confirmation',0)->count();
-        $ticketsdhdikonfirms = $transactionService->gettransaction()->where('confirmation',2)->count();
-        $ticketsditolaks = $transactionService->gettransaction()->where('confirmation',1)->count();
-        $ticketdiambils = $transactionService->gettransaction()->where('presence',1)->count();
-        $penggunawebsites = $userservice->getuser()->where('role', '!=', 'ADMIN')->count();
+        $ticketsdhdibayars = $transactionService->gettransaction()->where('status','paid')->count();
+        $ticketdiambils = $transactionService->gettransaction()->where('status','paid')->where('presence',1)->orderBy('id_transaction','desc')->count();
+        $penggunawebsites = $userservice->getuser();
 
-        return view('pages.admin.dashboard',compact('ticketblmdikonfirms','ticketsdhdikonfirms','ticketsditolaks','ticketdiambils','penggunawebsites'));
+        return view('pages.admin.dashboard',compact('ticketsdhdibayars','ticketdiambils','penggunawebsites'));
     }
 }

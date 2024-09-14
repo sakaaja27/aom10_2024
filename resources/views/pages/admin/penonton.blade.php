@@ -24,20 +24,10 @@
         <!-- Dynamic Table Full Pagination -->
         <div class="block block-rounded">
             <ul class="nav nav-tabs nav-tabs-block align-items-center" role="tablist">
-                <li class="nav-item">
-                    <button class="nav-link active" id="tiketblmkonfirm" data-bs-toggle="tab"
-                        data-bs-target="#ticketblmkonfirm" role="tab" aria-controls="ticketblmkonfirm"
-                        aria-selected="true">Tiket Belum Terkonfirmasi</button>
-                </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <button class="nav-link" id="btabswo-static-profile-tab1" data-bs-toggle="tab"
                         data-bs-target="#btabswo-static-profile1" role="tab" aria-controls="btabswo-static-profile"
-                        aria-selected="false">Tiket Dikonfirmasi</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="btabswo-static-profile-tab2" data-bs-toggle="tab"
-                        data-bs-target="#btabswo-static-profile2" role="tab" aria-controls="btabswo-static-profile"
-                        aria-selected="false">Tiket Ditolak</button>
+                        aria-selected="false">Tiket Penonton</button>
                 </li>
                 <li class="nav-item">
                     <button class="nav-link" id="btabswo-static-profile-tab3" data-bs-toggle="tab"
@@ -51,258 +41,47 @@
                 </li>
             </ul>
             <div class="block-content tab-content block-content-full overflow-x-auto">
-                <div class="tab-pane active " id="ticketblmkonfirm" role="tabpanel" aria-labelledby="tiketblmkonfirm"
-                    tabindex="0">
-                    <h3 class="block-title">Table Konfirmasi Pembayaran tiket</h3>
-                    <!-- DataTables init on table by adding .js-dataTable-full-pagination class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                    <table class="table table-hover table-bordered  table-vcenter js-dataTable-full-pagination">
-                        <thead>
-                            <tr>
-                                <th class="text-center" style="width: 70px;">No</th>
-                                <th style="width: 20%;">nama</th>
-                                <th class="d-none d-sm-table-cell" style="width: 20%;">Email</th>
-                                <th class="d-none d-sm-table-cell" style="width: 5%;">Bukti Pembayaran</th>
-                                <th class="d-none d-sm-table-cell" style="width: 15%;">Ticket</th>
-                                <th class="d-none d-sm-table-cell" style="width: 15%;">tanggal pembelian</th>
-                                <th class="d-none d-sm-table-cell" style="width: 15%;">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($ticketblmdikonfirms as $ticketblmdikonfirm)
-                                <tr>
-                                    <td class="text-center fs-sm">{{ $loop->iteration }}</td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketblmdikonfirm->user->name }}</td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketblmdikonfirm->user->email }}</td>
-                                    <td class="d-none d-sm-table-cell fs-sm text-center">
-                                        <button type="button" class="btn btn-sm btn-info"
-                                            data-bs-target="#lihatbuktipembayaran" data-bs-toggle="modal">
-                                            <i class="fa fa-fw fa-eye"></i>
-                                        </button>
-                                    </td>
-                                    <td class="d-none d-sm-table-cell">
-                                        {{ $ticketblmdikonfirm->ticket->name }}
-                                    </td>
-                                    <td class="d-none d-sm-table-cell">
-                                        {{ $ticketblmdikonfirm->created_at }}
-                                    </td>
-                                    <td class="d-none d-sm-table-cell">
-                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#konfirmasipembayaran">
-                                            <i class="fa fa-fw fa-check-to-slot"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <div class="modal fade" id="lihatbuktipembayaran" tabindex="-1" role="dialog"
-                                    aria-labelledby="lihatbuktipembayaran" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm modal-dialog-popin" role="document">
-                                        <div class="modal-content">
-                                            <div class="block block-rounded block-transparent mb-0">
-                                                <div class="block-header block-header-default">
-                                                    <h3 class="block-title">bukti pembayaran</h3>
-                                                    <div class="block-options">
-                                                        <button type="button" class="btn-block-option"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa fa-fw fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="block-content fs-sm">
-                                                    <img src="{{ $ticketblmdikonfirm->bukti_transaksi }}"
-                                                        class="img-fluid" alt="">
-                                                </div>
-                                                <div class="block-content block-content-full text-end bg-body">
-                                                    <button type="button" class="btn btn-sm btn-secondary me-1"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="konfirmasipembayaran" tabindex="-1" role="dialog"
-                                    aria-labelledby="konfirmasipembayaran" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-popin" role="document">
-                                        <div class="modal-content">
-                                            <div class="block block-rounded block-transparent mb-0">
-                                                <div class="block-header block-header-default">
-                                                    <h3 class="block-title">bukti pembayaran</h3>
-                                                    <div class="block-options">
-                                                        <button type="button" class="btn-block-option"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa fa-fw fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="block-content fs-sm ">
-                                                    <img class="img-fluid w-100"
-                                                        src="{{ $ticketblmdikonfirm->bukti_transaksi }}" alt="">
-                                                </div>
-                                                <div class="block-content block-content-full text-end bg-body">
-                                                    <button type="button" data-bs-toggle="modal"
-                                                        class="btn btn-sm btn-secondary me-1"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" data-bs-toggle="modal"
-                                                        class="btn btn-sm btn-danger me-1"
-                                                        data-bs-target="#tolakpembayaran">Tolak</button>
-                                                    <button type="button" data-bs-toggle="modal"
-                                                        class="btn btn-sm btn-success me-1"
-                                                        data-bs-target="#terimapembayaran">Konfirmasi</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="terimapembayaran" tabindex="-1" role="dialog"
-                                    aria-labelledby="terimapembayaran" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-popin" role="document">
-                                        <div class="modal-content">
-                                            <div class="block block-rounded block-transparent mb-0">
-                                                <div class="block-header block-header-default">
-                                                    <h3 class="block-title">bukti pembayaran</h3>
-                                                    <div class="block-options">
-                                                        <button type="button" class="btn-block-option"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa fa-fw fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="block-content fs-sm ">
-                                                    <b>Apakah Anda Akan Menerima Pembayaran Pembelian tiket Art Of
-                                                        Manunggalan 10 Dari :</b><br>
-                                                    Nama Pembeli : {{ $ticketblmdikonfirm->user->name }} <br>
-                                                    email : {{ $ticketblmdikonfirm->user->email }} <br>
-                                                    No Telepon : {{ $ticketblmdikonfirm->user->telp }} <br>
-                                                    tipe tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
-                                                    harga asli tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
-                                                    Uang Yang Dibayarkan : Rp.{{ $ticketblmdikonfirm->total_prices }} <br>
-                                                </div>
-                                                <div class="block-content block-content-full text-end bg-body">
-                                                    <form
-                                                        action="{{ route('confirm.tiket.penonton', $ticketblmdikonfirm->id_transaction) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('patch')
-                                                        <input type="hidden" value="2" name="status_konfirmasi">
-                                                        <button type="button" class="btn btn-sm btn-secondary me-1"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-sm btn-info me-1"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#konfirmasipembayaran">kembali</button>
-
-                                                        <button type="submit" class="btn btn-sm btn-success me-1">Terima
-                                                            Pembayaran</button>
-                                                    </form>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="tolakpembayaran" tabindex="-1" role="dialog"
-                                    aria-labelledby="tolakpembayaran" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-popin" role="document">
-                                        <div class="modal-content">
-                                            <div class="block block-rounded block-transparent mb-0">
-                                                <div class="block-header block-header-default">
-                                                    <h3 class="block-title">bukti pembayaran</h3>
-                                                    <div class="block-options">
-                                                        <button type="button" class="btn-block-option"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa fa-fw fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="block-content fs-sm ">
-                                                    <b>Apakah Anda Akan Menolak Pembayaran Pembelian tiket Art Of
-                                                        Manunggalan 10 Dari :</b><br>
-                                                    Nama Pembeli : {{ $ticketblmdikonfirm->user->name }} <br>
-                                                    email : {{ $ticketblmdikonfirm->user->email }} <br>
-                                                    No Telepon : {{ $ticketblmdikonfirm->user->telp }} <br>
-                                                    tipe tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
-                                                    harga asli tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
-                                                    Uang Yang Dibayarkan : Rp.{{ $ticketblmdikonfirm->total_prices }} <br>
-                                                </div>
-
-                                                <div class="block-content block-content-full text-end bg-body">
-                                                    <form
-                                                        action="{{ route('confirm.tiket.penonton', $ticketblmdikonfirm->id_transaction) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('patch')
-                                                        <input type="hidden" value="1" name="status_konfirmasi">
-                                                        <button type="button" class="btn btn-sm btn-secondary me-1"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-sm btn-info me-1"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#konfirmasipembayaran">kembali</button>
-                                                        <button type="submit" class="btn btn-sm btn-danger me-1">Tolak
-                                                            Pembayaran</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane" id="btabswo-static-profile1" role="tabpanel"
+                <div class="tab-pane active" id="btabswo-static-profile1" role="tabpanel"
                     aria-labelledby="btabswo-static-profile-tab" tabindex="0">
                     <h3 class="block-title">Table Konfirmasi Berhasil Pembayaran tiket</h3>
                     <table class="table table-hover table-bordered  table-vcenter js-dataTable-full-pagination">
                         <thead>
                             <tr>
-                                <th class="text-center" style="width: 70px;">No</th>
-                                <th style="width: 20%;">Barcode</th>
-                                <th class="d-none d-sm-table-cell" style="width: 20%;">Name</th>
-                                <th class="d-none d-sm-table-cell" style="width: 20%;">Email</th>
+                                <th class="text-center">No</th>
+                                <th>Barcode</th>
+                                <th class="d-none d-sm-table-cell">Name</th>
+                                <th class="d-none d-sm-table-cell">Email</th>
                                 <th class="d-none d-sm-table-cell" style="width: 5%;">Tipe Tiket</th>
+                                <th class="d-none d-sm-table-cell">Bukti Pembayaran</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($ticketsdhdikonfirms as $ticketsdhdikonfirm)
+                            @foreach ($ticketsdhdibayars as $ticketsdhdibayar)
                                 @php
                                     $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
                                 @endphp
-                                
+
                                 <tr>
                                     <td class="text-center fs-sm">{{ $loop->iteration }}</td>
-                                    <td class="fs-sm text-center"><img class="d-block mx-auto" width="200px"
-                                        src="data:image/png;base64,{{ base64_encode($generator->getBarcode($ticketsdhdikonfirm->id_transaction, $generator::TYPE_CODE_128)) }}"
-                                        alt="">
-                                        <small class="font-weight-bold">{{ strtoupper($ticketsdhdikonfirm->id_transaction) }}</small>
+                                    <td class="fs-sm text-center"><img class="d-block mx-auto" width="150px"
+                                            src="data:image/png;base64,{{ base64_encode($generator->getBarcode($ticketsdhdibayar->id_transaction, $generator::TYPE_CODE_128)) }}"
+                                            alt="">
+                                        <small
+                                            class="font-weight-bold">{{ strtoupper($ticketsdhdibayar->id_transaction) }}</small>
                                     </td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketsdhdikonfirm->user->name }}</td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketsdhdikonfirm->user->email }}</td>
+                                    <td class="fw-semibold fs-sm">{{ $ticketsdhdibayar->user->name }}</td>
+                                    <td class="fw-semibold fs-sm">{{ $ticketsdhdibayar->user->email }}</td>
                                     <td class="d-none d-sm-table-cell">
-                                        {{ $ticketsdhdikonfirm->ticket->name }}
+                                        {{ $ticketsdhdibayar->ticket->name }}
                                     </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane" id="btabswo-static-profile2" role="tabpanel"
-                    aria-labelledby="btabswo-static-profile-tab" tabindex="0">
-                    <h3 class="block-title">Table Konfirmasi Pembayaran tiket ditolak</h3>
-                    <table class="table table-hover table-bordered  table-vcenter js-dataTable-full-pagination">
-                        <thead>
-                            <tr>
-                                <th class="text-center" style="width: 50px;">No</th>
-                                <th class="d-none d-sm-table-cell" style="width:20%;">nama</th>
-                                <th class="d-none d-sm-table-cell" style="width: 20%;">Email</th>
-                                <th class="d-none d-sm-table-cell" style="width: 20%;">No Telepon</th>
-                                <th class="d-none d-sm-table-cell" style="width: 15%;">tanggal pembelian</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($ticketsditolaks as $ticketsditolak)
-                                <tr>
-                                    <td class="text-center fs-sm">{{ $loop->iteration }}</td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketsditolak->user->name }}</td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketsditolak->user->email }}</td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketsditolak->user->telp }}</td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketsditolak->user->created_at }}</td>
+                                    <td class="d-none d-sm-table-cell">
+                                        <button type="button"
+                                            onclick="detailtiketpengguna('{{ $ticketsdhdibayar->id_transaction }}')"
+                                            class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                            data-bs-target="#konfirmasipembayaran">
+                                            <i class="fa fa-fw fa-eye"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -324,30 +103,36 @@
                         </thead>
                         <tbody>
                             @foreach ($ticketdiambils as $ticketdiambil)
-                            @php
-                            $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
-                        @endphp
+                                @php
+                                    $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+                                @endphp
                                 <tr>
                                     <td class="text-center fs-sm">{{ $loop->iteration }}</td>
                                     <td class="fs-sm text-center"><img class="d-block mx-auto" width="150px"
-                                        src="data:image/png;base64,{{ base64_encode($generator->getBarcode($ticketdiambil->id_transaction, $generator::TYPE_CODE_128)) }}"
-                                        alt="">
-                                        <small class="font-weight-bold">{{ strtoupper($ticketdiambil->id_transaction) }}</small></td>
+                                            src="data:image/png;base64,{{ base64_encode($generator->getBarcode($ticketdiambil->id_transaction, $generator::TYPE_CODE_128)) }}"
+                                            alt="">
+                                        <small
+                                            class="font-weight-bold">{{ strtoupper($ticketdiambil->id_transaction) }}</small>
+                                    </td>
                                     <td class="fw-semibold fs-sm">{{ $ticketdiambil->user->name }}</td>
                                     <td class="fw-semibold fs-sm">{{ $ticketdiambil->user->email }}</td>
                                     <td class="fw-semibold fs-sm">{{ $ticketdiambil->user->created_at }}</td>
                                     <td class="fw-semibold fs-sm">
                                         @if ($ticketdiambil->presence == 1)
-                                        <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light ">Sudah Diambil</span>
+                                            <span
+                                                class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light ">Sudah
+                                                Diambil</span>
                                         @else
-                                        <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning">Belum Diambil</span>
+                                            <span
+                                                class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning">Belum
+                                                Diambil</span>
                                         @endif
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                 </div>
                 <div class="tab-pane" id="btabswo-static-profile4" role="tabpanel"
                     aria-labelledby="btabswo-static-profile-tab" tabindex="0">
@@ -363,9 +148,9 @@
                         </thead>
                         <tbody>
                             @foreach ($penggunawebsites as $penggunawebsite)
-                            @php
-                            $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
-                        @endphp
+                                @php
+                                    $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+                                @endphp
                                 <tr>
                                     <td class="text-center fs-sm">{{ $loop->iteration }}</td>
                                     <td class="fw-semibold fs-sm">{{ $penggunawebsite->name }}</td>
@@ -381,10 +166,75 @@
         </div>
         <!-- END Dynamic Table Full Pagination -->
     </div>
+    <div class="modal fade" id="konfirmasipembayaran" tabindex="-1" role="dialog"
+        aria-labelledby="konfirmasipembayaran" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-popin" role="document">
+            <div class="modal-content">
+                <div class="block block-rounded block-transparent mb-0">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">bukti pembayaran</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content fs-sm margin mb-2">
+                        ID Transaksi : <span id="id-transaksi"></span><br>
+                        Nama Pembeli : <span id="nama-pembeli"></span><br>
+                        Email : <span id="email"></span><br>
+                        No Telepon : <span id="no-telepon"></span><br>
+                        Jenis tiket : <span id="jenis-tiket"></span><br>
+                        Metode Pembayaran : <span id="metode-pembayaran"></span><br>
+                        Harga asli tiket : Rp.<span id="harga-asli-tiket"></span><br>
+                        Uang Yang Dibayarkan : Rp.<span id="uang-dibayarkan"></span><br>
+                        Link Midtrans : <a target="_blank" id="link-midtrans">Link Midtrans</a>
+                    </div>
+                    <div class="block-content block-content-full text-end bg-body">
+                        <button type="button" data-bs-toggle="modal" class="btn btn-sm btn-secondary me-1"
+                            data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function detailtiketpengguna(id) {
+            $.ajax({
+                url: '{{ route('tiket.penonton', ['id' => ':id']) }}'.replace(':id',
+                id), // Ganti :id dengan variabel id
+                type: 'GET',
+                dataType: 'json',
+                success: function(val) {
+                    $('#id-transaksi').text(val.order_id);
+                    $('#nama-pembeli').text(val.user.name);
+                    $('#email').text(val.user.email);
+                    $('#no-telepon').text(val.no_telp);
+                    $('#jenis-tiket').text(val.ticket.name);
+                    $('#metode-pembayaran').text(val.payment_method);
+                    $('#harga-asli-tiket').text(val.gross_amount);
+                    $('#uang-dibayarkan').text(val.total_prices);
+                    $('#link-midtrans').attr('href', 'https://dashboard.midtrans.com/beta/transactions?detail='+val.transaction_id);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Handle errors here (optional)
+                    $('#id-transaksi').text('');
+                    $('#nama-pembeli').text('');
+                    $('#email').text('');
+                    $('#no-telepon').text('');
+                    $('#jenis-tiket').text('');
+                    $('#metode-pembayaran').text('');
+                    $('#harga-asli-tiket').text('');
+                    $('#uang-dibayarkan').text('');
+                    $('#link-midtrans').attr('href', '');
+                    console.error('Error submitting data:', textStatus, errorThrown);
+                    return false; // Return false to indicate an error
+                }
+            });
+        }
+    </script>
     <!-- END Page Content -->
     @push('script')
-
-
         <!-- Page JS Plugins -->
         <script src="{{ asset('dashboard_assets/js/plugins/datatables/dataTables.min.js') }}"></script>
         <script src="{{ asset('dashboard_assets/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>

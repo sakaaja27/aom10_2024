@@ -43,16 +43,18 @@
                                 <td class="fs-sm text-center">{{ $ticket->price }}</td>
                                 <td class="fs-sm text-center">{{ $ticket->quantity }}</td>
                                 <td class="text-center">
-                                    <form action="{{ route('Ticket.destroy',$ticket->idTicket) }}" method="POST"  onsubmit="return confirmDelete()">
+                                    <form action="{{ route('Ticket.destroy', $ticket->idTicket) }}" method="POST"
+                                        onsubmit="return confirmDelete()">
                                         @csrf
                                         @method('delete')
                                         <div class="btn-group">
-                                            <a type="button" href="{{ route('Ticket.edit',$ticket->idTicket) }}" class="btn btn-sm btn-alt-secondary" data-bs-toggle="tooltip"
+                                            <a type="button" href="{{ route('Ticket.edit', $ticket->idTicket) }}"
+                                                class="btn btn-sm btn-alt-secondary" data-bs-toggle="tooltip"
                                                 title="Edit">
                                                 <i class="fa fa-fw fa-pencil-alt"></i>
                                             </a>
-                                            <button type="submit" class="btn btn-sm btn-alt-secondary" data-bs-toggle="tooltip"
-                                                title="Delete">
+                                            <button type="submit" class="btn btn-sm btn-alt-secondary"
+                                                data-bs-toggle="tooltip" title="Delete">
                                                 <i class="fa fa-fw fa-trash"></i>
                                             </button>
                                         </div>
@@ -97,6 +99,21 @@
                                 <input type="number" class="form-control" id="nama_sponsor" name="quantity"
                                     placeholder="Masukan Quantity Ticket">
                             </div>
+                            <div class="mb-2">
+                                <label class="form-label" for="nama_sponsor">Benefit Ticket
+                                    <button type="button" class="btn btn-sm btn-secondary" id="add-benefit">Tambah
+                                        Benefit</button>
+                                </label>
+                                <div id="benefit-container">
+                                    <div class="benefit-input-group">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control mb-2" name="benefit_ticket[]"
+                                                placeholder="Masukan Benefit Ticket">
+                                            <button type="button" class="btn btn-danger mb-2 btn-sm remove-benefit">-</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="block-content block-content-full text-end bg-body">
                             <button type="button" class="btn btn-sm btn-alt-secondary me-1"
@@ -109,11 +126,66 @@
         </div>
     </div>
     @push('script')
-    <script>
-        function confirmDelete() {
-            return confirm('Are you sure you want to delete this item?');
-        }
-    </script>
+        <script>
+            document.getElementById('add-benefit').addEventListener('click', function() {
+                var benefitContainer = document.getElementById('benefit-container');
+
+                // Create a new div for the benefit input group
+                var benefitInputGroup = document.createElement('div');
+                benefitInputGroup.setAttribute('class', 'benefit-input-group mb-2');
+
+                // Create a new div for the input group (input and button)
+                var inputGroup = document.createElement('div');
+                inputGroup.setAttribute('class', 'input-group');
+
+                // Create a new input element
+                var newInput = document.createElement('input');
+                newInput.setAttribute('type', 'text');
+                newInput.setAttribute('class', 'form-control mb-2');
+                newInput.setAttribute('name', 'benefit_ticket[]');
+                newInput.setAttribute('placeholder', 'Masukan Benefit Ticket');
+
+                // Create a remove button
+                var removeButton = document.createElement('button');
+                removeButton.setAttribute('type', 'button');
+                removeButton.setAttribute('class', 'btn btn-danger btn-sm mb-2 remove-benefit');
+                removeButton.textContent = '-';
+
+                // Append the input and remove button to the input group div
+                inputGroup.appendChild(newInput);
+                inputGroup.appendChild(removeButton);
+
+                // Append the input group to the benefit input group div
+                benefitInputGroup.appendChild(inputGroup);
+
+                // Append the new benefit input group to the container
+                benefitContainer.appendChild(benefitInputGroup);
+
+                // Add event listener for the remove button with validation
+                removeButton.addEventListener('click', function() {
+                    if (document.querySelectorAll('.benefit-input-group').length > 1) {
+                        benefitInputGroup.remove();
+                    } else {
+                        alert('Tidak dapat menghapus inputan terakhir.');
+                    }
+                });
+            });
+
+            // Add event listener for the initial "Hapus" button with validation
+            document.querySelectorAll('.remove-benefit').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    if (document.querySelectorAll('.benefit-input-group').length > 1) {
+                        button.closest('.benefit-input-group').remove();
+                    } else {
+                        alert('Tidak dapat menghapus inputan terakhir.');
+                    }
+                });
+            });
+
+            function confirmDelete() {
+                return confirm('Are you sure you want to delete this item?');
+            }
+        </script>
         <script src="{{ asset('dashboard_assets/js/lib/jquery.min.js') }}"></script>
         <!-- Page JS Plugins -->
         <script src="{{ asset('dashboard_assets/js/plugins/datatables/dataTables.min.js') }}"></script>
@@ -131,5 +203,5 @@
         <script src="{{ asset('dashboard_assets/js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
         <!-- Page JS Code -->
         <script src="{{ asset('dashboard_assets/js/pages/be_tables_datatables.min.js') }}"></script>
-        @endpush
+    @endpush
 @endsection

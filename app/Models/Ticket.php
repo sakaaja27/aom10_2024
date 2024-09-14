@@ -16,4 +16,7 @@ class Ticket extends Model
         "price",
         "quantity"
     ];
+    public function ticket_benefit(){
+        return $this->hasMany(ticket_benefits::class,'id_ticket','idTicket');
+    }
 }

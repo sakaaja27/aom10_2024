@@ -53,12 +53,13 @@ Route::controller(LoginController::class)->group(function () {
 
 
 Route::prefix('admin')
-    // ->middleware(['auth', 'is_admin', 'verified'])
+    ->middleware(['auth', 'is_admin', 'verified'])
     ->group(function () {
         // dashboard
         Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
         Route::controller(AdminPenontonController::class)->group(function () {
             Route::get('/Penonton', 'index')->name('index.penonton');
+            Route::get('/Penonton/Ticket/{id}', 'getticketpenonton')->name('tiket.penonton');
             Route::patch('/Penonton/{id}', 'confirm')->name('confirm.tiket.penonton');
         });
         // Route::get('/{role?}', AdminDashboardController::class)->name('admin.dashboard');
