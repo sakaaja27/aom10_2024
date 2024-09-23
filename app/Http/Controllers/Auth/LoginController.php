@@ -31,8 +31,11 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             return redirect()->intended(RouteServiceProvider::HOME);
+        } else {
+            return redirect('/login')->withErrors(['error' => 'Akun atau Password salah']);
         }
     }
+
     public function registermethod(Request $request)
     {
         $request->validate([
@@ -42,11 +45,14 @@ class LoginController extends Controller
             'confirm_password' => 'required|string|min:8',
         ]);
 
+        if ($request->password != $request->confirm_password) {
+            return back()->withErrors(['password' => 'Pastikan password dan confirm password sama']);
+        }
         $user = User::create([
             'name' => $request->username,
             'telp' => $request->no_telp,
             'email' => $request->email,
-            'role' => 'USR-Px',
+            'role' => 'USR-P',
             'password' => Hash::make($request->password),
         ]);
 

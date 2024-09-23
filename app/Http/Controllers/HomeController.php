@@ -14,16 +14,17 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
 
     public function index()
     {
         $post = postingan::all();
         $ticket = Ticket::all();
-        // dd($ticket);
+        
         return view('index', compact('post', 'ticket'));
     }
     

@@ -21,7 +21,6 @@ class Transaction extends Model
         "id_voucher",
         "confirmation",
         "presence",
-        "bukti_transaksi",
         "created_at",
         "updated_at"
     ];

@@ -124,13 +124,6 @@ class TicketController extends Controller
         \Midtrans\Config::$is3ds = true;
 
         try {
-            if ($req->hasFile('bukti_bayar')) {
-                if ($req->old_file) {
-                    Storage::delete('bukti_bayar/' . $req->old_file);
-                }
-
-                $fileName = $req->file("bukti_bayar")->store("images/bukti_bayar", "public");
-            }
             $id_transaction = Str::uuid();
             $data = [
                 "id_transaction" => $id_transaction,
@@ -139,7 +132,6 @@ class TicketController extends Controller
                 "confirmation" => 0,
                 "presence" => 0,
                 "id_panitia" => $req->kode_panitia,
-                "bukti_transaksi" => $fileName
             ];
             $searchTicket = Ticket::where(["name" => $req->nama_ticket])->first();
             $searchVoucher = Voucher::where(["kode" => $req->kode_voucher])->first();

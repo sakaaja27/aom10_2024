@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/login.css">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Register</title>
 </head>
@@ -19,7 +20,7 @@
                 <div class="input-box">
                    
                    <header>Welcome Back to <span class="text-danger">AOM</span></header>
-                   <form action="{{route('register')}}" method="get">
+                   <form action="{{route('store')}}" method="get">
                     @csrf
 
                     <div class="input-field">
@@ -34,17 +35,18 @@
                    <div class="input-field">
                         <input type="password" class="input" value="{{ old('password') }}" id="pass" required>
                         <label for="pass">Password</label>
+                        
                     </div> 
                     
                    <div class="input-field">
-                        
+                       
                         <input type="submit" class="submit" value="Sign Up">
                    </div> 
                    </form>
                    <div class="signin">
                     <span>Already have an account? <a href="{{route('login')}}">Log in here</a></span>
                    </div>
-                   <div class="signin pb-lg-5">
+                   <div class="backto pb-lg-5">
                     <span>Back to<a href="{{route('/')}}"> Home</a></span>
                    </div>
                 </div>  

@@ -8,7 +8,9 @@ use App\Http\Controllers\AdminPresenceController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminSponsorshipsController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\PanitiaController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\VoucherController;
@@ -25,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::prefix('/')
     ->middleware(['auth', 'is_user', 'verified'])
@@ -94,5 +97,8 @@ Route::prefix('admin')
 
         Route::resource('Ticket', TicketController::class);
         Route::resource('Voucher', VoucherController::class);
+
+        // webhook
+        Route::post('/midtrans/webhook',[MidtransController::class,'handleWebhook'])->name('midtrans');
     });
 
