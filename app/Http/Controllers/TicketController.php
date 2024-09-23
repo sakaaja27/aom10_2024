@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class TicketController extends Controller
 {
@@ -288,19 +289,26 @@ class TicketController extends Controller
     function callback(Request $req)
     {
         // callback belum ditest
-        $serverKey = config('midtrans.server_key');
-        $hashed = hash('sha512', $req->order_id . $req->status_code . $req->gross_amount . $serverKey);
-        if ($hashed == $req->signature_key) {
-            Log::info('Berhasil masuk');
-            $order = Transaction::find($req->order_id);
-            if ($req->transaction_status == 'settlement') {
-                Log::info('bener nih');
-                $order->update(['status' => 'paid']);
-            } elseif ($req->transaction_status == 'pending') {
-                $order->update(['status' => 'pending']);
-            } else {
-                Log::error('Error nih');
+        $serverKey = config("midtrans.server_key");
+        $hashed = hash("sha512", $req->order_id.$req->status_code.$req->gross_amount.$serverKey);
+        try{
+            if ($hashed == $req->signature_key) {
+                $order = Transaction::find($req->order_id);
+                if ($req->transaction_status == "settlement") {
+                    return response()->json(["message" => "berhasil mengubah pembayaran: $req->transaction_id"]);
+                    $order->update(["status" => "paid"]);
+                }else if($req->transaction_status == "pending"){
+                    $order->update(["status"=> "pending"]);
+                    return response()->json(["message" => "pending"]);
+                }else{
+                    return response()->json(["message" => "ada yang salah, hashnya $hashed"]);
+                }
+            }else{
+                return response()->json(["message" => "signature key wrong"]);
             }
+        }catch(HttpException $e)
+        {
+            return response()->json(["message" => "error: $e"]);   
         }
     }
     function verifikasi($id_ticket, $snapToken)
