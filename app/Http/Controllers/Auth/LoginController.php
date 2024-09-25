@@ -27,21 +27,14 @@ class LoginController extends Controller
             'password' => 'required|min:8',
         ]);
         $credentials = $request->only('email', 'password');
-        // Check if the email is verified
-        $user = User::where('email', $credentials['email'])->first();
-        // Attempt to authenticate with password hashing
-        if (Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            // Check user role
-            if (Auth::user()->role === 'ADMIN') {
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('home');
-            }
+
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended(RouteServiceProvider::HOME);
         } else {
-            return redirect()->back()->withErrors(['password' => 'Invalid credentials.']);
+            return redirect('/login')->withErrors(['error' => 'Akun atau Password salah']);
         }
     }
+
     public function registermethod(Request $request)
     {
         $request->validate([
@@ -51,11 +44,14 @@ class LoginController extends Controller
             'confirm_password' => 'required|string|min:8',
         ]);
 
+        if ($request->password != $request->confirm_password) {
+            return back()->withErrors(['password' => 'Pastikan password dan confirm password sama']);
+        }
         $user = User::create([
             'name' => $request->username,
             'telp' => $request->no_telp,
             'email' => $request->email,
-            'role' => 'USR-Px',
+            'role' => 'USR-P',
             'password' => Hash::make($request->password),
         ]);
 

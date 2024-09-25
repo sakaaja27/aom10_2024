@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/login.css">
+    <link rel="icon" href="images/aom.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Register</title>
 </head>
+
 
 <body>
     <div class="wrapper">
@@ -49,23 +51,63 @@
                                 <input type="password" class="input" name="password" value="{{ old('password') }}"
                                     id="pass" required>
                                 <label for="pass">Password</label>
+                                <small id="password-error" style="color: red;"></small>
+                                @if ($errors->has('password'))
+                                    <small id="password-error"
+                                        style="color: red;">{{ $errors->first('password') }}</small>
+                                        <script>
+                                            setTimeout(function() {
+                                                document.getElementById("password-error").style.display = "none";
+                                            }, 2000); // 2000ms = 2 seconds
+                                        </script>
+                                @endif
                             </div>
 
                             <div class="input-field">
+                                <input type="password" name="confirm_password" class="input"
+                                    value="{{ old('confirm_password') }}" id="pass" required>
+                                <label for="pass">Confirm Password</label>
+                                <small id="password-error" style="color: red;"></small>
+                                @if ($errors->has('password'))
+                                <small id="password-error"
+                                style="color: red;">{{ $errors->first('password') }}</small>
+                                <script>
+                                    setTimeout(function() {
+                                        document.getElementById("password-error").style.display = "none";
+                                    }, 2000); // 2000ms = 2 seconds
+                                </script>
+                                @endif
+                            </div>
 
-                                <input type="submit" class="submit" value="Sign Up">
+                            <div class="input-field">
+                                <input type="submit" class="btn btn-light" value="Sign Up">
+                                {{-- <button type="submit" class="submit" value="Sign Up"> --}}
                             </div>
                         </form>
-                        <div class="signin">
+                        <div class="backto mt-5">
                             <span>Already have an account? <a href="{{ route('login') }}">Log in here</a></span>
-                        </div>
-                        <div class="signin pb-lg-5">
-                            <span>Back to<a href="{{ route('home') }}"> Home</a></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <script>
+        const form = document.querySelector('form');
+        const passwordInput = document.getElementById('pass');
+        const passwordErrorElement = document.getElementById('password-error');
+
+        form.addEventListener('submit', function(event) {
+            if (passwordInput.value.length < 8) {
+                event.preventDefault();
+                passwordErrorElement.textContent = 'Password harus minimal 8 karakter';
+                setTimeout(function() {
+                    passwordErrorElement.textContent = '';
+                }, 2000); // hide the error message after 2 seconds
+                
+            }
+        });
+    </script>
 </body>
 
 </html>
