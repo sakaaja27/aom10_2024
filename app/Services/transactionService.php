@@ -8,6 +8,12 @@ use App\Models\User;
 use Midtrans\Config;
 
 class transactionService{
+    public function gettransactionbycodebarcodeandemail($codebarcode,$email){
+        $data = transaction::with('user','ticket')->limit(1)->where('kode_barcode',$codebarcode)->orwhereHas('user', function ($query) use ($email) {
+            $query->where('email', $email);
+        });
+            return $data;
+    }
     public function gettransactionbyidandemail($idtransaction,$email){
         $data = transaction::with('user','ticket')->limit(1)->where('id_transaction',$idtransaction)->orwhereHas('user', function ($query) use ($email) {
             $query->where('email', $email);
@@ -91,11 +97,12 @@ class transactionService{
         return $user;
     }
 
-    public function confirmtransaction($id, $confirmCode)
+    public function confirmtransaction($id, $confirmCode,$status)
     {
         $transaction = $this->gettransactionbyidandemail($id,null);
         $transaction->update([
-            'confirmation' => $confirmCode
+            'confirmation' => $confirmCode,
+            'status' => $status,
         ]);
         return $this->gettransactionbyidandemail($id,null);
     }

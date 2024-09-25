@@ -25,7 +25,7 @@ class AdminPresenceController extends Controller
 
     public function getuserdata(transactionService $transactionservice, Request $request)
     {
-        $datauser = $transactionservice->gettransactionbyidandemail($request->code, $request->email)->get();
+        $datauser = $transactionservice->gettransactionbycodebarcodeandemail($request->code, $request->email)->get();
         if (!empty($datauser->first())) {
             return response()->json($datauser);
         } else {

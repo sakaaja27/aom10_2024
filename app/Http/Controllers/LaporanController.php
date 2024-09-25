@@ -15,6 +15,8 @@ class LaporanController extends Controller
     }
     public function export(Request $request){
         // dd($request);
+        $confirmationFilter = $request->confirmation_filter;
+        $presenceFilter = $request->presence_filter;
         $nama = ($request->nama_file != null) ? $request->nama_file : 'laporan';
         $tipefileexport = ($request->tipe_file != null) ? $request->tipe_file : 'xlsx';
         $tanggalstart = ($request->tanggal != null) ? $request->tanggal->format('Y-m-d') : date('Y-m-d');
@@ -34,7 +36,7 @@ class LaporanController extends Controller
                 $tipeimportfile = \Maatwebsite\Excel\Excel::XLSX;
                 break;
         }
-        return Excel::download(new Penjualanexport, $namafile, $tipeimportfile);
+        return Excel::download(new Penjualanexport($confirmationFilter, $presenceFilter), $namafile, $tipeimportfile);
     }
     public function styles(Worksheet $sheet)
     {

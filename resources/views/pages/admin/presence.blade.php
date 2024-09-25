@@ -198,6 +198,7 @@
             const JenisTicket = document.getElementById('JenisTicket');
             const MetodePembayaran = document.getElementById('MetodePembayaran');
             const NamaPenonton = document.getElementById('NamaPenonton');
+            const email = document.getElementById('email');
             const EmailPenonton = document.getElementById('EmailPenonton');
             const NomorTelepon = document.getElementById('NomorTelepon');
             const status_konfirmasi = document.getElementById('status_konfirmasi');
@@ -234,7 +235,7 @@
                     );
                 }
 
-                JsBarcode("#barcode", value.id_transaction, {
+                JsBarcode("#barcode", value.kode_barcode, {
                     format: "CODE128",
                     lineColor: "#000",
                     width: 5,
@@ -245,6 +246,7 @@
                 myModal.show()
             } else {
                 $(inpcode).val(null);
+                $(email).val(null);
                 alert("gagal mengkonfirmasi tiket dikarenakan telah dikonfirmasi", "error");
             }
 

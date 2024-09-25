@@ -29,7 +29,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
-                            <th>nama Sponsor</th>
+                            <th>nama Medpart</th>
                             <th class="d-none d-sm-table-cell">Logo</th>
                             <th class="d-none d-sm-table-cell">Action</th>
                         </tr>

@@ -19,11 +19,13 @@ class AdminPenontonController extends Controller
         $this->transactionservice = $transactionservice;
         $this->userservice = $userservice;
     }
-    public function index(){
-        $ticketsdhdibayars = $this->transactionservice->gettransaction()->where('status','paid')->where('presence',0)->orderBy('id_transaction','desc')->get();
-        $ticketdiambils = $this->transactionservice->gettransaction()->where('status','paid')->where('presence',1)->orderBy('id_transaction','desc')->get();
-        $penggunawebsites = $this->userservice->getuser();
-        return view('pages.admin.penonton',compact('ticketsdhdibayars','ticketdiambils','penggunawebsites'));
+    public function index(transactionService $transactionService,UserService $userservice){
+        $ticketblmdikonfirms = $transactionService->gettransaction()->where('confirmation',0)->orderBy('created_at','asc')->get();
+        $ticketsdhdikonfirms = $transactionService->gettransaction()->where('confirmation',2)->where('presence',0)->orderBy('id_transaction','desc')->get();
+        $ticketsditolaks = $transactionService->gettransaction()->where('confirmation',1)->orderBy('id_transaction','asc')->get();
+        $ticketdiambils = $transactionService->gettransaction()->where('presence',1)->orderBy('id_transaction','desc')->get();
+        $penggunawebsites = $userservice->getuser();
+        return view('pages.admin.penonton',compact('ticketblmdikonfirms','ticketsdhdikonfirms','ticketsditolaks','ticketdiambils','penggunawebsites'));
     }
     public function getticketpenonton($idtransaction){
         $data1 = $this->transactionservice->gettransactionwithmidtrans($idtransaction);
@@ -35,9 +37,11 @@ class AdminPenontonController extends Controller
     {
         // get request
         $confirmCode = $request->status_konfirmasi;
+        $status = $request->status;
+
 
         // proccess confirm user
-        $data = $transactionService->confirmtransaction($id, $confirmCode)->first();
+        $data = $transactionService->confirmtransaction($id, $confirmCode,$status)->first();
         // data email
         $dataEmail = [
             'name' =>   $data->user->name,

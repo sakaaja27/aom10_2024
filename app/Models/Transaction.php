@@ -25,6 +25,7 @@ class Transaction extends Model
         "payment_method",
         "confirmation",
         "presence",
+        "status",
         "created_at",
         "updated_at"
     ];

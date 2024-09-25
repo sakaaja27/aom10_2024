@@ -14,6 +14,7 @@ use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\PanitiaController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -65,8 +66,10 @@ Route::prefix('admin')
             Route::get('/Penonton/Ticket/{id}', 'getticketpenonton')->name('tiket.penonton');
             Route::patch('/Penonton/{id}', 'confirm')->name('confirm.tiket.penonton');
         });
-        // Route::get('/{role?}', AdminDashboardController::class)->name('admin.dashboard');
-        // users
+        Route::controller(LaporanController::class)->group(function () {
+            Route::get('/Laporan', 'index')->name('Laporan.index');
+            Route::get('/Laporan/export', 'export')->name('admin.laporan.export');
+        });
 
         // presence
         Route::get('presence', [AdminPresenceController::class, 'index'])->name('admin.presence');

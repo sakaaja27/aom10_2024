@@ -78,7 +78,7 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link " href="#">
+                    <a class="nav-main-link {{ request()->is('admin/Laporan*') ? 'active' : '' }}"k" href="{{ route('Laporan.index') }}">
                         <i class="nav-main-link-icon fa-solid fa-book-open"></i>
                         <span class="nav-main-link-name">laporan</span>
                     </a>
