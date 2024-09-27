@@ -38,7 +38,7 @@
                                 <td class="fs-sm text-center">@if ($postingan->media_type == 'IMAGE' || $postingan->media_type == 'CAROUSEL_ALBUM')
                                     <img lazy src="{{ $postingan->media_url }}" class="img-fluid" style="height: 50%" alt="">
                                 @elseif($postingan->media_type == 'VIDEO')
-                                    <video lazy src="{{ $postingan->media_url }}" class="img-fluid" style="height: 50%" alt=""></video>
+                                    <video controls lazy src="{{ $postingan->media_url }}" class="img-fluid" style="height: 50%" alt=""></video>
                                 @endif</td>
                                 <td class="fs-sm text-center"><a href="{{ $postingan->permalink  }}" target="__blank" class="btn btn-primary rounded"><i class="fa-brands fa-instagram"></i></a></td>
                                 <td class="fs-sm text-center"><img src="{{ $postingan->thumbnail_url }}" class="img-fluid" alt=""></td>
