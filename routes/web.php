@@ -15,6 +15,7 @@ use App\Http\Controllers\PanitiaController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PostinganController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +70,8 @@ Route::prefix('admin')
             Route::get('/Laporan', 'index')->name('Laporan.index');
             Route::get('/Laporan/export', 'export')->name('admin.laporan.export');
         });
+
+        Route::get('Postingan', [PostinganController::class, 'index'])->name('Postingan.index');
 
         // presence
         Route::get('presence', [AdminPresenceController::class, 'index'])->name('admin.presence');

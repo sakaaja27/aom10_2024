@@ -64,13 +64,13 @@
                         <span class="nav-main-link-name">ticket</span>
                     </a>
                 </li>
-                {{-- <li class="nav-main-item">
+                <li class="nav-main-item">
                     <a class="nav-main-link  {{ request()->is('admin/Postingan*') ? 'active' : '' }}"
                         href="{{ route('Postingan.index') }}">
                         <i class="nav-main-link-icon fa-solid fa-ticket"></i>
                         <span class="nav-main-link-name">postingan</span>
                     </a>
-                </li> --}}
+                </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link {{ request()->is('admin/Voucher*') ? 'active' : '' }} " href="{{ route('Voucher.index') }}">
                         <i class="nav-main-link-icon fa-solid fa-tags"></i>
