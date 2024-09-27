@@ -37,7 +37,7 @@
                             @csrf
 
                             <div class="input-field">
-                                <input type="text" class="input" id="username" required name="name"
+                                <input type="text" class="input" id="username" required name="username"
                                     value="{{ old('username') }}" autocomplete="off" autofocus>
                                 <label for="username">Username</label>
 

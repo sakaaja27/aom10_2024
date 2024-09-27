@@ -49,7 +49,7 @@ class LoginController extends Controller
         }
         $user = User::create([
             'name' => $request->username,
-            'telp' => $request->no_telp,
+            'telp' => "123023",
             'email' => $request->email,
             'role' => 'USR-P',
             'password' => Hash::make($request->password),

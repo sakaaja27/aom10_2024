@@ -107,7 +107,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="block-content fs-sm">
-                                                    <img src="{{ $ticketblmdikonfirm->bukti_transaksi }}"
+                                                    <img src="{{ $ticketblmdikonfirm->bukti_pembayaran ? url('storage/'.$ticketblmdikonfirm->bukti_pembayaran) : '#' }}"
                                                         class="img-fluid" alt="">
                                                 </div>
                                                 <div class="block-content block-content-full text-end bg-body">
@@ -133,8 +133,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="block-content fs-sm ">
-                                                    <img class="img-fluid w-100"
-                                                        src="{{ $ticketblmdikonfirm->bukti_transaksi }}" alt="">
+                                                    <img src="{{ $ticketblmdikonfirm->bukti_pembayaran ? url('storage/'.$ticketblmdikonfirm->bukti_pembayaran) : '#' }}"
+                                                        class="img-fluid" alt="">
                                                 </div>
                                                 <div class="block-content block-content-full text-end bg-body">
                                                     <button type="button" data-bs-toggle="modal"
@@ -169,10 +169,10 @@
                                                     <b>Apakah Anda Akan Menerima Pembayaran Pembelian tiket Art Of
                                                         Manunggalan 10 Dari :</b><br>
                                                     Nama Pembeli : {{ $ticketblmdikonfirm->user->name }} <br>
-                                                    email : {{ $ticketblmdikonfirm->user->email }} <br>
-                                                    No Telepon : {{ $ticketblmdikonfirm->user->telp }} <br>
-                                                    tipe tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
-                                                    harga asli tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
+                                                    Email : {{ $ticketblmdikonfirm->user->email }} <br>
+                                                    No Telepon : {{ $ticketblmdikonfirm->no_telp }} <br>
+                                                    Tipe Tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
+                                                    Harga Asli Tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
                                                     Uang Yang Dibayarkan : Rp.{{ $ticketblmdikonfirm->total_prices }} <br>
                                                 </div>
                                                 <div class="block-content block-content-full text-end bg-body">
@@ -218,8 +218,8 @@
                                                     Nama Pembeli : {{ $ticketblmdikonfirm->user->name }} <br>
                                                     email : {{ $ticketblmdikonfirm->user->email }} <br>
                                                     No Telepon : {{ $ticketblmdikonfirm->user->telp }} <br>
-                                                    tipe tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
-                                                    harga asli tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
+                                                    Tipe Tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
+                                                    Harga Asli Tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
                                                     Uang Yang Dibayarkan : Rp.{{ $ticketblmdikonfirm->total_prices }} <br>
                                                 </div>
 

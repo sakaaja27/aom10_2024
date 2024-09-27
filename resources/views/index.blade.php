@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/animate.css">
-    
+
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/magnific-popup.css">
@@ -26,117 +27,100 @@
 </head>
 
 <body>
-<header>
-    <nav class="navbar navbar-expand-lg  ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand text-white" href="index.html"><img src="images/aom.png" width="100px"></a>
-            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#ftco-nav"
-                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
-            </button>
+    <header>
+        <nav class="navbar navbar-expand-lg  ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+            <div class="container">
+                <a class="navbar-brand text-white" href="index.html"><img src="images/aom.png" width="100px"></a>
+                <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#ftco-nav"
+                    aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="oi oi-menu"></span> Menu
+                </button>
 
-            <div class="collapse navbar-collapse text-warning" id="ftco-nav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item "><a href="#" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="#GuestStar" class="nav-link">GuestStar</a></li>
-                    <!--  -->
-                    <li class="nav-item"><a href="#ticket" class="nav-link">Ticket</a></li>
-                </ul>
+                <div class="collapse navbar-collapse text-warning" id="ftco-nav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item "><a href="#" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="#GuestStar" class="nav-link">GuestStar</a></li>
+                        <!--  -->
+                        <li class="nav-item"><a href="#ticket" class="nav-link">Ticket</a></li>
+                    </ul>
 
-                <ul class="navbar-nav mx-end">
-                    <!-- Authentication Links -->
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
+                    <ul class="navbar-nav mx-end">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
 
-                        {{-- @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif --}}
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-											 document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                            
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                        {{-- <div class="dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::user()->name }}
-                            </a>
-                          
-                            <ul class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+											 document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                            </ul>
-                          </div> --}}
-                    @endguest
-                </ul>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
 
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </header>
     <!-- END nav -->
 
-    <div class="hero-wrap js-fullheight" >
-		<div class="container pt-5">
-            
-		  <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
-            {{-- <div class="icon-gs d-flex justify-content-end items-end">
+    <div class="hero-wrap js-fullheight">
+        <div class="container pt-5">
+
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
+                data-scrollax-parent="true">
+                {{-- <div class="icon-gs d-flex justify-content-end items-end">
                 <img src="{{ asset('images/icon_gs.png') }}" width="100px">
             </div> --}}
-			<div class="col-md-10 col-sm-8 col-xs-12 ftco-animate" data-scrollax="properties: { translateY: '70%' }">
-				<p class="title mb-4 text-white" style="font-weight: bold" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span style="font-size: 60px;">Art Of Manunggalan</span><br><span class="text-white" style="margin-left: 20%; margin-right: 40%; text-align: center; font-size: 60px;">10.0</span></p>
-				<p class="sub-title mb-4 text-white" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }" style="font-size: 20px;">Euphoria of Unity: Together We Rise, Together We Shine</p>
-			  <div id="timer" class="d-flex mb-3">
-				<div class="time">
-				  <p id="day" class="digit display-4 font-weight-bold">00</p>
-				  <p class="digit_name font-weight-bold">Days</p>
-				</div>
-				<div class="time">
-				  <p id="hour" class="digit display-4 font-weight-bold">00</p>
-				  <p class="digit_name font-weight-bold">Hours</p>
-				</div>
-				<div class="time">
-				  <p id="min" class="digit display-4 font-weight-bold">00</p>
-				  <p class="digit_name font-weight-bold">Minutes</p>
-				</div>
-				<div class="time">
-				  <p id="sec" class="digit display-4 font-weight-bold">00</p>
-				  <p class="digit_name font-weight-bold">Seconds</p>
-				</div>
-			  </div>
-			  <!-- <div class="col-md-12 col-sm-6 col-xs-12 ">
-				<a class="btn btn-danger btn-sm round" href="#ticket" >Buy Ticket</a>
-			  </div> -->
-			</div>
-		  </div>
-		</div>
-	  </div>
+                <div class="col-md-10 col-sm-8 col-xs-12 ftco-animate"
+                    data-scrollax="properties: { translateY: '70%' }">
+                    <p class="title mb-4 text-white" style="font-weight: bold"
+                        data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+                            style="font-size: 60px;">Art Of Manunggalan</span><br><span class="text-white"
+                            style="margin-left: 20%; margin-right: 40%; text-align: center; font-size: 60px;">10.0</span>
+                    </p>
+                    <p class="sub-title mb-4 text-white" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+                        style="font-size: 20px;">Euphoria of Unity: Together We Rise, Together We Shine</p>
+                    <div id="timer" class="d-flex mb-3">
+                        <div class="time">
+                            <p id="day" class="digit display-4 font-weight-bold">00</p>
+                            <p class="digit_name font-weight-bold">Days</p>
+                        </div>
+                        <div class="time">
+                            <p id="hour" class="digit display-4 font-weight-bold">00</p>
+                            <p class="digit_name font-weight-bold">Hours</p>
+                        </div>
+                        <div class="time">
+                            <p id="min" class="digit display-4 font-weight-bold">00</p>
+                            <p class="digit_name font-weight-bold">Minutes</p>
+                        </div>
+                        <div class="time">
+                            <p id="sec" class="digit display-4 font-weight-bold">00</p>
+                            <p class="digit_name font-weight-bold">Seconds</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -311,13 +295,15 @@
                                     </div>
                                     <div class="action text-center">
                                         @guest
-                                            <a type="button" href="{{ route('login') }}" class="btn btn-danger btnModal" style="border-radius: 40px;" data-bs-toggle="modal" data-bs-target="#beliTicket">
+                                            <a type="button" href="{{ route('login') }}" class="btn btn-danger"
+                                                style="border-radius: 40px;">
                                                 Buy Ticket
                                             </a>
                                         @else
-                                            <a type="button" href="{{ route('ticketPage') }}" class="btn btn-danger btnModal" style="border-radius: 40px;" data-bs-toggle="modal" data-bs-target="#beliTicket">
+                                            <button class="btn btn-danger btnModal" style="border-radius: 40px;"
+                                                data-bs-toggle="modal" data-bs-target="#beliTicket">
                                                 Buy Ticket
-                                            </a>
+                                            </button>
                                         @endguest
                                     </div>
                                 </div>
@@ -436,7 +422,8 @@
                                         style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">
                                         <a href="https://www.instagram.com/p/C8ogbN3M7a6/?utm_source=ig_embed&amp;utm_campaign=loading"
                                             style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;"
-                                            target="_blank">A post shared by Art of Manunggalan (@aom.jti)</a></p>
+                                            target="_blank">A post shared by Art of Manunggalan (@aom.jti)</a>
+                                    </p>
                                 </div>
                             </blockquote>
                             <script async src="//www.instagram.com/embed.js"></script>
@@ -510,7 +497,6 @@
         <div class="footer-top pt-5">
             <div class="container">
                 <img src="images/logo.png" width="300px" class="img-fluid mr-3">
-                {{-- <img src="images/logo_jti.png" width="100px" class="img-fluid mr-3"> --}}
                 <img src="images/aom.png" width="100px" class="img-fluid">
 
                 <div class="row mt-3">
@@ -521,12 +507,15 @@
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.4475411397284!2d113.72020707434469!3d-8.15758328172425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b6ea0e8375%3A0x4618d7137a4cf5c1!2sGedung%20Jurusan%20TI%20Politeknik%20Negeri%20Jember!5e0!3m2!1sid!2ssg!4v1685635062443!5m2!1sid!2ssg"
                                     frameborder="0" allowfullscreen></iframe>
                             </div>
-                            <p class="text-white">Gd. Teknologi Informasi, Politeknik Negeri Jember, Lingkungan Panji, Tegalgede,<br>
+                            <p class="text-white">Gd. Teknologi Informasi, Politeknik Negeri Jember, Lingkungan Panji,
+                                Tegalgede,<br>
                                 Kec. Kaliwates, Kabupaten Jember, Jawa Timur 68124<br>
                             </p>
                             <div class="social-links">
-                                <a href="mailto:hmjti@polije.ac.id" class="email"><i class="fa-solid fa-envelope"></i></a>
-                                <a href="https://www.instagram.com/aom.jti/" class="instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="mailto:hmjti@polije.ac.id" class="email"><i
+                                        class="fa-solid fa-envelope"></i></a>
+                                <a href="https://www.instagram.com/aom.jti/" class="instagram"><i
+                                        class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -587,8 +576,169 @@
         </div>
     </div>
 
+    @if (Auth::check())
+        <div class="modal fade" id="beliTicket" tabindex="-1" aria-labelledby="beliTicket" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <form action="{{ route('buyTicket') }}" method="post" id="formTicket"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5">Buy Your Ticket</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">Transaction</h5>
+                                    <div class="row">
+                                        <div class="form-group row text-dark">
+                                            <label for="staticEmail"
+                                                class="col-sm-4 col-5 col-form-label text-wrap">Username</label>
+                                            <div class="col-sm-8 col-7">
+                                                <p class="form-control-plaintext text-end">
+                                                    @if (Auth::check())
+                                                        {{ Auth::user()->name }}
+                                                    @endif
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group row text-dark">
+                                            <label for="staticEmail"
+                                                class="col-sm-4 col-5 col-form-label text-wrap">No
+                                                HP<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8 col-7">
+                                                <div class="form-group">
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            name="no_telp" placeholder="Masukan Nomor HP">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group row text-dark">
+                                            <label for="staticEmail"
+                                                class="col-sm-4 col-5 col-form-label text-wrap">Nama
+                                                Ticket<span class="text-danger">*</span></label>
+                                            <div class="col-sm-8 col-7">
+                                                <div class="form-group">
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="ticketName" name="nama_ticket"
+                                                            placeholder="Enter Code">
 
-
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group row text-dark">
+                                            <label for="staticEmail"
+                                                class="col-sm-4 col-5 col-form-label text-wrap">Code
+                                                Panitia</label>
+                                            <div class="col-sm-8 col-7">
+                                                <div class="form-group">
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="kode_panitia" name="kode_panitia"
+                                                            placeholder="Enter Code">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-danger btn-sm" type="button"
+                                                                id="submitPanitia">Apply</button>
+                                                        </div>
+                                                    </div>
+                                                    <span id="hasilPanitia"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="card-text text-dark" for="kode_voucher">
+                                            Code Voucher :
+                                        </label>
+                                        <input type="text" class="form-control form-control-sm mb-2"
+                                            name="kode_voucher" id="kode_voucher">
+                                        <button class="btn btn-danger" type="button"
+                                            id="submitVoucher">Apply</button>
+                                    </div>
+                                </div>
+                                <span id="hasilVoucher"></span>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <label for="formFile" class="form-label text-dark">Pilih Metode Pembayaran</label>
+                                    <select class="form-control form-control-sm" name="payment_method"
+                                        id="payment-method" required>
+                                        <option hidden>-- Pilih Metode Pembayaran --</option>
+                                        <option value="bri">BRI 023892323298323 (A.n Louis Hessel John)</option>
+                                        <option value="bca">BCA 293283832 (A.n Keofjeofje)</option>
+                                        <option value="mandiri">Mandiri 023232032334 (A.n kelkerkref)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <strong class="card-text text-dark">
+                                        Rincian Pembayaran
+                                    </strong>
+                                    <div class="row">
+                                        <div class="form-group row text-dark">
+                                            <label for="staticEmail"
+                                                class="col-sm-4 col-5 col-form-label text-wrap">Harga
+                                                normal</label>
+                                            <div class="col-sm-8 col-7">
+                                                <p class="form-control-plaintext text-end" id="hargaNormal"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row text-dark">
+                                            <label for="staticEmail"
+                                                class="col-sm-4 col-5 col-form-label text-wrap">Biaya
+                                                Admin</label>
+                                            <div class="col-sm-8 col-7">
+                                                <p class="form-control-plaintext text-end" id="biayaAdmin"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row text-dark">
+                                            <label for="staticEmail"
+                                                class="col-sm-4 col-5 col-form-label text-wrap">Harga
+                                                Diskon</label>
+                                            <div class="col-sm-8 col-7">
+                                                <p class="form-control-plaintext text-end" id="hargaDiskon"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row text-dark">
+                                            <label for="staticEmail"
+                                                class="col-sm-4 col-5 col-form-label text-wrap">Total
+                                                Harga</label>
+                                            <div class="col-sm-8 col-7">
+                                                <p class="form-control-plaintext text-end" id="totalHarga"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" style="border-radius: 40px;"
+                                data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger" style="border-radius: 40px;">Buat
+                                Pesanan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
 
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
@@ -598,6 +748,9 @@
                 stroke-miterlimit="10" stroke="#F96D00" />
         </svg></div>
 
+
+        
+   
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -616,10 +769,128 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script>
         new WOW().init();
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            let totalHSBA = 0;
+            let potonganAdmin = 0;
+            let biayaAdmin = 0;
+            let hargaTiket = 0;
+            $("#payment_method").prop("selectedIndex", 0);
+            const formatNumber = new Intl.NumberFormat("id-ID", {
+                style: 'currency',
+                currency: 'IDR'
+            });
+
+            // Utility functions
+            function parseCurrency(currencyString) {
+                return parseFloat(currencyString.replace(/Rp\s*/, '').replace(/\./g, '').replace(/,/g, '.'));
+            }
+
+            function parseFormattedNumber(formattedNumber) {
+                return parseInt(formattedNumber.replace(/\./g, ''), 10);
+            }
+
+            function updateText(selector, value) {
+                $(selector).text(formatNumber.format(value));
+            }
+
+            function handleAjaxError(jqXHR, textStatus, errorThrown) {
+            }
+
+            // Initial setup
+            updateText("#biayaAdmin", 0);
+            updateText("#hargaDiskon", 0);
+
+            // Event handlers
+            $("#submitPanitia").click(function() {
+                const idPanitia = $("#kode_panitia").val();
+                $.get(`getPanitia/${idPanitia}`)
+                    .done(function(item) {
+                        if (item.data) {
+                            $("#kode_panitia").prop('readonly', true);
+                            $("#submitPanitia").hide();
+                            alert("Berhasil");
+                        } else {
+                            alert("Kode Tidak Ditemukan");
+                        }
+                    })
+                    .fail(handleAjaxError);
+            });
+
+            $("#submitVoucher").click(calcVoucher);
+
+            $("#payment-method").change(function() {
+                const idMethod = $(this).val();
+                const methodToAdmin = {
+                    "bri": 2500,
+                    "bca": 2500,
+                    "mandiri": 2500,
+                };
+
+                if (methodToAdmin.hasOwnProperty(idMethod)) {
+                    potonganAdmin = methodToAdmin[idMethod];
+                    calcBiayaAdmin(potonganAdmin);
+                } else {
+                    alert("Terjadi kesalahan");
+                }
+            });
+
+            $(".btnModal").click(function() {
+                const $pricingS1 = $(this).closest('.pricing-s1');
+                const ticketName = $pricingS1.find(".ticket-name").text().trim();
+                hargaTiket = parseFormattedNumber($pricingS1.find(".hargaTiket").text().trim());
+
+                $("#ticketName").val(ticketName).prop('readonly', true);
+                updateText("#hargaNormal", hargaTiket);
+                updateText("#totalHarga", hargaTiket);
+            });
+
+            $('#modalTiket').on('hidden.bs.modal', function() {
+                $('#formTicket')[0].reset();
+            });
+
+            function calcBiayaAdmin(potonganAdmin) {
+                biayaAdmin = potonganAdmin < 1 ? hargaTiket * potonganAdmin : potonganAdmin;
+                totalHSBA = hargaTiket + biayaAdmin;
+                calcVoucher();
+                updateText("#biayaAdmin", biayaAdmin);
+                updateText("#totalHarga", totalHSBA);
+            }
+
+            function calcVoucher() {
+                const idVoucher = $("#kode_voucher").val();
+                $.get(`getVoucher/${idVoucher}`)
+                    .done(function(item) {
+                        if (item.data) {
+                            const hargaDiskon = item.data.discount;
+                            let totalHarga = totalHSBA - hargaDiskon;
+                            if (totalHarga < 1) totalHarga = hargaTiket - hargaDiskon;
+
+                            if (totalHarga >= 10000) {
+                                $("#kode_voucher").prop('readonly', true);
+                                updateText("#hargaDiskon", hargaDiskon);
+                                updateText("#totalHarga", totalHarga);
+                                $("#submitVoucher").hide();
+                            } else {
+                                alert("Kode Voucher Tidak Dapat Dipakai");
+                                $("#kode_voucher").val("");
+                            }
+                        } else {
+                            alert("Kode Voucher Tidak Valid");
+                            $("#kode_voucher").val("");
+                        }
+                    })
+                    .fail(handleAjaxError);
+            }
+        });
     </script>
 </body>
 

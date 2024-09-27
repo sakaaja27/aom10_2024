@@ -25,6 +25,7 @@ class AdminPenontonController extends Controller
         $ticketsditolaks = $transactionService->gettransaction()->where('confirmation',1)->orderBy('id_transaction','asc')->get();
         $ticketdiambils = $transactionService->gettransaction()->where('presence',1)->orderBy('id_transaction','desc')->get();
         $penggunawebsites = $userservice->getuser();
+        // dd($ticketblmdikonfirms[0]->user);
         return view('pages.admin.penonton',compact('ticketblmdikonfirms','ticketsdhdikonfirms','ticketsditolaks','ticketdiambils','penggunawebsites'));
     }
     public function getticketpenonton($idtransaction){

@@ -29,21 +29,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::prefix('/')
     ->middleware(['auth', 'is_user', 'verified'])
     ->group(function () {
         Route::post('contactMedpart', [HomeController::class, 'sendMedpart'])->name('contactMedpart');
         Route::post('contactSponsor', [HomeController::class, 'sendSponsorship'])->name('contactSponsor');
 
-        Route::get("verifikasiPembayaran/{id}/{snap}", [TicketController::class, 'verifikasi'])->name('verifikasiPembayaran');
+        Route::get("verifikasiPembayaran/{id}", [TicketController::class, 'verifikasi'])->name('verifikasiPembayaran');
 
         Route::get('verifikasiLogin', function () {
             return view('verifikasi_login');
         })->name('verifikasiLogin');
         Route::get("getPanitia/{id}", [PanitiaController::class, "getData"])->name("getPanitia");
         Route::get("getVoucher/{id}", [VoucherController::class, "getData"])->name("getVoucher");
-        Route::get("ticketPage", [TicketController::class, "ticketPage"])->name("ticketPage");
+        Route::patch("uploadPembayaran/{id}", [TicketController::class, "formPembayaran"])->name("uploadPembayaran");
         Route::post('buyTicket', [TicketController::class, "buyTicket"])->name('buyTicket');
     });
 

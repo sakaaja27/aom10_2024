@@ -18,14 +18,14 @@ class Transaction extends Model
         "id_ticket",
         "id_panitia",
         "ticket_price",
-        "midtrans_fee",
+        "transaction_fee",
         "voucher_discount",
         "total_prices",
         "id_voucher",
         "payment_method",
-        "confirmation",
-        "presence",
+        "bukti_pembayaran",
         "status",
+        "confirmation",
         "created_at",
         "updated_at"
     ];

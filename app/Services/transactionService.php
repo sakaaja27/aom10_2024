@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\UserConfirmMail;
 use App\Models\User;
 use Midtrans\Config;
-
+use Illuminate\Support\Str;
 class transactionService{
     public function gettransactionbycodebarcodeandemail($codebarcode,$email){
         $data = transaction::with('user','ticket')->limit(1)->where('kode_barcode',$codebarcode)->orwhereHas('user', function ($query) use ($email) {
@@ -100,10 +100,15 @@ class transactionService{
     public function confirmtransaction($id, $confirmCode,$status)
     {
         $transaction = $this->gettransactionbyidandemail($id,null);
-        $transaction->update([
+        $data = [
             'confirmation' => $confirmCode,
-            'status' => $status,
-        ]);
+            'status' => $status, 
+        ];
+        if($confirmCode == '2')
+        {
+            $data["kode_barcode"] = Str::random(10);
+        }
+        $transaction->update($data);
         return $this->gettransactionbyidandemail($id,null);
     }
 
