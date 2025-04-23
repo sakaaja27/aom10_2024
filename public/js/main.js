@@ -3,7 +3,7 @@
  	easing: 'slide'
  });
 
- var target_mili_sec = new Date("Nov 9, 2024 14:30:0").getTime();
+ var target_mili_sec = new Date("Nov 16, 2024 14:30:0").getTime();
 
  function timer() {
  	var now_mili_sec = new Date().getTime();
@@ -21,9 +21,6 @@
  }
 
  setInterval(timer, 1000); //1000 it means 1 sec
-
-// API
- 
 
 (function($) {
 
