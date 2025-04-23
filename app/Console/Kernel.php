@@ -13,6 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('app:sinkronisasipostingan')->daily();
+        $schedule->command('transaction:set-inactive-transaction')->everyTenMinutes();
+        $schedule->command('transaction:set-timelimit-transaction')->everyTenSeconds();
     }
 
     /**

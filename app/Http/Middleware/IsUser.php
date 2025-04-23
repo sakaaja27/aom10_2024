@@ -21,12 +21,27 @@ class IsUser
         //     return redirect('/');
         // }
         // return $next($request); 
-        if (Auth::user() && Auth::user()->role == 'USR-P' || Auth::user()->role == 'USR-V') {
+        // if (Auth::user() && Auth::user()->role == 'USR-P' || Auth::user()->role == 'USR-V') {
+        //     return $next($request);
+        // } elseif (Auth::user() && Auth::user()->role == 'ADMIN') {
+        //     return redirect('admin/dashboard');
+        // } else {
+        //     return redirect('/');
+        // }
+        $user = Auth::user();
+
+        if ($user && ($user->role == 'USR-P' || $user->role == 'USR-V')) {
+            
+            if (!$user->email_verified_at) {
+                return redirect('login')->with('message', 'Silakan verifikasi email terlebih dahulu.');
+            }
+
             return $next($request);
-        } elseif (Auth::user() && Auth::user()->role == 'ADMIN') {
+        } 
+        elseif ($user && $user->role == 'ADMIN') {
             return redirect('admin/dashboard');
-        } else {
-            return redirect('/');
-        }
+        } 
+        
+        return redirect('/');
     }
 }

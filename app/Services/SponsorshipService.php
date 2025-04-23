@@ -2,6 +2,7 @@
 namespace App\Services;
 use App\Models\Sponsorships;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 class SponsorshipService
 {
     public function getData()
@@ -14,27 +15,25 @@ class SponsorshipService
         $sponsorships = Sponsorships::where('id', $id)->get();
         return $sponsorships;
     }
-    public function store($data)
-    {
-        $data->validate([
-            'nama_sponsor' => 'required',
-            'id_sponsorship_categori' => 'required',
-        ]);
-        // dd($data);
-        $logo = $data->logo;
-        $filename = uniqid() . '.' . $logo->extension();
-        $dtUpload = new Sponsorships();
-        $dtUpload->name = $data->nama_sponsor;
-        $dtUpload->id_sponsorship_categori = $data->id_sponsorship_categori;
-        $dtUpload->logo = $data->file('logo')->store('sponsor');
-        $save = $dtUpload->save();
+   public function store(Request $request)
+{
+    $request->validate([
+        'nama_sponsor' => 'required',
+        'id_sponsorship_categori' => 'required',
+        'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Adjust validation rules as needed
+    ]);
 
-        if ($save) {
-            return $store = '1';
-        } else {
-            return $store = '0';
-        }
+    $sponsorship = new Sponsorships();
+    $sponsorship->nama_sponsor = $request->nama_sponsor;
+    $sponsorship->id_sponsorship_categori = $request->id_sponsorship_categori;
+    $sponsorship->logo = $request->file('logo')->store('sponsor', 'public');
+
+    if ($sponsorship->save()) {
+        return response()->json(['success' => true, 'message' => 'Sponsorship saved successfully']);
+    } else {
+        return response()->json(['success' => false, 'message' => 'Error saving sponsorship']);
     }
+}
     public function update($data, $id)
     {
         $sponsorships = Sponsorships::find($id);
@@ -47,7 +46,7 @@ class SponsorshipService
         if (!empty($data->logo)) {
             Storage::disk('local')->delete($existingLogo); 
             $picture = uniqid() . '.' . $data->logo->extension();
-            $dataupdate['logo'] = $data->file('logo')->store('sponsor');
+            $dataupdate['logo'] = $data->file('logo')->store('sponsor','public');
         }
 
         $save = $sponsorships->update($dataupdate);

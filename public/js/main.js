@@ -22,6 +22,9 @@
 
  setInterval(timer, 1000); //1000 it means 1 sec
 
+// API
+ 
+
 (function($) {
 
 	"use strict";

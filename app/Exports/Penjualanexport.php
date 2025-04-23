@@ -18,21 +18,28 @@ class Penjualanexport implements FromCollection, WithHeadings, ShouldAutoSize, W
 {
     protected $no;
     protected $data;
+    protected $tanggalstart;
+    protected $tanggalend;
 
-    public function __construct($confirmationFilter = null, $presenceFilter = null)
-    {
+    public function __construct($confirmationFilter = null, $presenceFilter = null, $tanggalstart = null, $tanggalend = null) {
         $this->no = 1;
-        // Modify to select all confirmation statuses and presence statuses
         $this->data = Transaction::with('user', 'ticket', 'voucher', 'panitia')->orderBy('id_transaction', 'asc');
+
+        // Set the tanggalstart and tanggalend properties
+        $this->tanggalstart = $tanggalstart;
+        $this->tanggalend = $tanggalend;
+
         // Filter berdasarkan status konfirmasi
         if ($confirmationFilter == 'confirmed') {
-            $this->data->where('confirmation', 2); // Hanya transaksi yang diterima
+            $this->data->where('confirmation', 2);
         } elseif ($confirmationFilter == 'unconfirmed') {
-            $this->data->where('confirmation', 1); // Hanya transaksi yang tidak diterima
+            $this->data->where('confirmation', 1);
         }
-        // Filter berdasarkan status kehadiran tiket
-        if (!is_null($presenceFilter)) {
-            $this->data->where('presence', $presenceFilter); // Kehadiran tiket sesuai filter
+
+        // Filter berdasarkan tanggal
+        if (!is_null($this->tanggalstart) && !is_null($this->tanggalend)) {
+            $this->data->whereDate('created_at', '>=', $this->tanggalstart)
+                       ->whereDate('created_at', '<=', $this->tanggalend);
         }
     }
 

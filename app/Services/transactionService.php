@@ -1,18 +1,80 @@
 <?php
 namespace App\Services;
 
-use App\Models\transaction;
+use App\Mail\BelumBayarMail;
+use App\Mail\OfflineTransactionMail;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserConfirmMail;
+use App\Models\BelumBayar;
+use Illuminate\Support\Facades\DB;
+use App\Models\OfflineTransaction;
 use App\Models\User;
 use Midtrans\Config;
 use Illuminate\Support\Str;
-class transactionService{
-    public function gettransactionbycodebarcodeandemail($codebarcode,$email){
-        $data = transaction::with('user','ticket')->limit(1)->where('kode_barcode',$codebarcode)->orwhereHas('user', function ($query) use ($email) {
-            $query->where('email', $email);
-        });
-            return $data;
+class TransactionService{
+    public function gettransactionbysales()
+    {
+        
+        $web_transaction = Transaction::select(
+                DB::raw("CASE WHEN ticket.name != sales_in THEN CONCAT(ticket.name, ' ', sales_in) ELSE ticket.name END AS name_ticket"),
+                DB::raw("COUNT(transaction.id_transaction) AS transaction_count"),
+                DB::raw("MAX(transaction.created_at) AS last_transaction")
+            )
+            ->join('ticket', 'ticket.idTicket', '=', 'transaction.id_ticket')
+            ->where('transaction.confirmation', 2)
+            ->groupBy('transaction.id_ticket', 'ticket.name', 'ticket.sales_in')
+            ->having('transaction_count', '!=', 0)
+            ->orderBy('ticket.idTicket')
+            ->get();
+
+        
+        $offline_transaction = OfflineTransaction::select(
+            DB::raw("CONCAT(nama_ticket, ' ', 'Offline') as name_ticket"),
+            DB::raw("COUNT(id) as transaction_count"),
+            DB::raw("MAX(offlinetransaction.created_at) AS last_transaction")
+        )
+        ->groupBy('nama_ticket')
+        ->get();
+        $data = $web_transaction->concat($offline_transaction);
+        return $data;
+    }
+    public function gettransactionbycodebarcodeandemail($codebarcode, $email)
+    {
+
+        $combinedQuery = DB::table('offlinetransaction')
+            ->select([
+                'id as id_transaction',
+                'kode_barcode',
+                'nama_lengkap',
+                'email',
+                'nama_ticket',
+                'presence',
+                DB::raw("'offlinetransaction' as source_table")
+            ])
+            ->unionAll(
+                DB::table('transaction')
+                    ->join('users', 'users.id', '=', 'transaction.id_user')
+                    ->join('ticket', 'ticket.idTicket', '=', 'transaction.id_ticket')
+                    ->select([
+                        'transaction.id_transaction',
+                        'transaction.kode_barcode',
+                        'users.name as nama_lengkap',
+                        'users.email as email',
+                        'ticket.name as nama_ticket',
+                        'transaction.presence',
+                        DB::raw("'transaction' as source_table")
+                    ])
+            );
+
+        // Wrap the union query as a subquery to apply `where` across all results
+        $result = DB::table(DB::raw("({$combinedQuery->toSql()}) as combined"))
+            ->mergeBindings($combinedQuery) // Merge bindings to avoid SQL errors
+            ->where('kode_barcode', '=', $codebarcode)
+            ->orWhere('email', '=', $email)
+            ->first();
+
+        return $result;
     }
     public function gettransactionbyidandemail($idtransaction,$email){
         $data = transaction::with('user','ticket')->limit(1)->where('id_transaction',$idtransaction)->orwhereHas('user', function ($query) use ($email) {
@@ -69,7 +131,13 @@ class transactionService{
                 $dataEmail['text3'] = 'Untuk Melakukan proses verifikasi Ulang pembayaran tiket konser, silakan unggah bukti pembayaran Anda di website Art Of Manunggalan 10';
 
                 break;
-
+            case 3:
+                $dataEmail['img'] = 'img/ticket_mail/ditolak.png';
+                $dataEmail['color'] = '#D61F47';
+                $dataEmail['text'] = 'Tiket Hangus';
+                $dataEmail['text2'] = 'Kami mohon maaf untuk memberitahukan bahwa tiket konser Art Of Manunggalan 10 Anda telah hangus oleh sistem kami karena telah melebihi tenggat waktu pembayaran. Silakan hubungi tim di +62 852-1670-9554 jika terdapat kesalahan pada sistem kami.';
+                $dataEmail['text3'] = 'Silakan buat transaksi baru di website Art Of Manunggalan 10';
+                break;
             default:
             $dataEmail['img'] = 'img/ticket_mail/berhasil.png';
                 $dataEmail['button'] = 'Lihat Tiket';
@@ -83,6 +151,62 @@ class transactionService{
         $send = Mail::to($dataEmail['email'])->send(new UserConfirmMail($dataEmail));
 
         return $send;
+    }
+    public function sendOfflineTransactionEmail($dataEmail)
+    {
+        $dataEmail['img'] = 'img/ticket_mail/berhasil.png';
+        $dataEmail['button'] = 'Lihat Tiket';
+        $dataEmail['color'] = '#1EE0AC';
+        $dataEmail['text'] = 'Berhasil';
+        $dataEmail['text2'] = 'Hai '. $dataEmail["nama_lengkap"].', Pembayaran tiket konser Art Of Manunggalan 10 Anda telah diverifikasi oleh admin. Terima kasih atas kesabaran Anda. Silakan simpan bukti pembayaran Anda untuk berjaga-jaga. Nikmati konsernya!';
+        $dataEmail['text3'] = 'Silahkan scan kode barcode pada file dibawah ini untuk melakukan pengambilan tiket di lokasi yang telah ditentukan.';   
+        try{
+             $send = Mail::to($dataEmail["email"])->send(new OfflineTransactionMail($dataEmail));
+              $transaction = OfflineTransaction::findOrFail($dataEmail['id']);
+            if ($transaction) {
+                $transaction->status = "sudah"; // Assuming Sudah means successful
+                $transaction->save();
+            }
+            return $send;
+        }catch(Exception $e)
+        {
+            Log::error('Sending Email Failed' . $e->getMessage());
+            $transaction = OfflineTransaction::findOrFail($dataEmail["id"]);
+            if($transaction)
+            {
+                $transaction->status = "belum";
+                $transaction->save();
+            }
+        }
+       
+    }
+    public function sendBelumBayarEmail($dataEmail)
+    {
+        $dataEmail['img'] = 'img/ticket_mail/ditolak.png';
+        $dataEmail['color'] = '#D61F47';
+        $dataEmail['text'] = 'Transaksi Ditahan';
+        $dataEmail['text2'] = 'Halo sobat Arta!,
+                                Sepertinya sobat Arta belum melakukan pembayaran untuk tiket AOM nih!.
+                                Cek tiketmu di website yaaa, jangan sampai kehabisan! 
+                                ';
+        $dataEmail['text3'] = 'Tiket akan hangus apabila tidak melakukan pembayaran selama 1x24 jam mulai pemberitahuan ini dikirim.';   
+        try{
+            $send = Mail::to($dataEmail["email"])->send(new BelumBayarMail($dataEmail));
+             $transaction = BelumBayar::findOrFail($dataEmail['id']);
+           if ($transaction) {
+               $transaction->status = 1; // Assuming Sudah means successful
+               $transaction->save();
+           }
+           return $send;
+       }catch(Exception $e)
+       {
+           $transaction = BelumBayar::findOrFail($dataEmail["id"]);
+           if($transaction)
+           {
+               $transaction->status = 0;
+               $transaction->save();
+           }
+       }
     }
     public function show($code, $role)
     {
@@ -99,12 +223,12 @@ class transactionService{
 
     public function confirmtransaction($id, $confirmCode,$status)
     {
-        $transaction = $this->gettransactionbyidandemail($id,null);
+        $transaction = $this->gettransactionbyidandemail($id,null)->first();
         $data = [
             'confirmation' => $confirmCode,
             'status' => $status, 
         ];
-        if($confirmCode == '2')
+        if($confirmCode == '2'  && !Str::contains($transaction->ticket->sales_in, 'Bundle'))
         {
             $data["kode_barcode"] = Str::random(10);
         }

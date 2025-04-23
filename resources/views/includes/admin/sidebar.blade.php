@@ -43,6 +43,13 @@
                         <span class="nav-main-link-name">Kehadiran</span>
                     </a>
                 </li>
+                 <li class="nav-main-item">
+                    <a class="nav-main-link {{ request()->is('admin/OfflineTicketing*') ? 'active' : '' }}"
+                        href="{{ route('index.ticketing') }} ">
+                        <i class="nav-main-link-icon fa fa-address-book"></i>
+                        <span class="nav-main-link-name">Offline Ticketing</span>
+                    </a>
+                </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link {{ request()->is('admin/sponsorship*') ? 'active' : '' }}"
                         href="{{ route('admin.sponsorship') }} ">

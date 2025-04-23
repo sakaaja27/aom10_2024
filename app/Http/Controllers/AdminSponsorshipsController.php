@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\SponsorshipService;
 use App\Models\sponsorship_categori;
+use App\Models\Sponsorships;
 
 class AdminSponsorshipsController extends Controller
 {
@@ -32,29 +33,39 @@ class AdminSponsorshipsController extends Controller
        return view('pages.admin.sponsorship.editsponsorship',compact('sponsorships','sponsorshipscategoriesdata'));
     }
 
-    public function update(SponsorshipService $sponsorshipService,Request $request,$id){
-        $this->validate($request, [
-            'nama_sponsor' => 'required',
-            'id_sponsorship_categori' => 'required',
-        ]);
-        $update = $sponsorshipService->update($request,$id);
-        if ($update == 1) {
-            toast('Data berhasil diubah!', 'success');
-            return redirect()->route('admin.sponsorship');
-        }else{
-            toast('Gagal!', 'error');
-            return redirect()->back();
+    public function update(Request $request, $id)
+    {   
+        $sponsorship = Sponsorships::findOrFail($id);
+        
+        $sponsorship->name = $request->name;
+        $sponsorship->id_sponsorship_categori = $request->id_sponsorship_categori;
+
+        if ($request->hasFile('logo')) {
+            $sponsorship->logo = $this->uploadLogo($request);
         }
+
+        if ($sponsorship->save()) {
+            return redirect()->route('admin.sponsorship')->with('success', 'Data sponsorship berhasil diubah.');
+        }
+
+        return redirect()->back()->with('error', 'Gagal mengubah data sponsorship.');
     }
 
     public function destroy($id, SponsorshipService $sponsorshipService)
     {
-        $sponsorships=$sponsorshipService->destroy($id);
-        if ($sponsorships=='1') {
+        try {
+            $sponsorship = $sponsorshipService->getWhere($id)->firstOrFail();
+
+            if ($sponsorship->logo) {
+                Storage::disk('local')->delete($sponsorship->logo);
+            }
+
+            $sponsorshipService->destroy($id);
+
             toast('Data berhasil dihapus!', 'success');
-            return redirect()->back();
-        }else{
-            toast('Gagal', 'error');
+            return redirect()->route('admin.sponsorship');
+        } catch (\Exception $e) {
+            toast('Gagal menghapus data: ' . $e->getMessage(), 'error');
             return redirect()->back();
         }
     }

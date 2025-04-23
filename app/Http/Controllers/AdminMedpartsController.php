@@ -39,7 +39,7 @@ class AdminMedpartsController extends Controller
         $filename = uniqid().".".$logo->extension();
         $dtUpload = new Medpart;
         $dtUpload->name = $name;
-        $dtUpload->logo = $request->file('logo')->store('medpart');
+        $dtUpload->logo = $request->file('logo')->store('medpart','public');
         $save=$dtUpload->save();
         if ($save) {
             toast('Data berhasil ditambahkan!', 'success');
@@ -72,25 +72,29 @@ class AdminMedpartsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $medparts = Medpart::find($id);
+        $medparts = Medpart::findOrFail($id);
+
         $dataupdate = [
-            'nama_medpart' => $request->nama_medpart,
-            'logo' => $request->logo,
+            'name' => $request->name,
         ];
-        
-        $existingLogo = $medparts->logo; 
-        if (!empty($request->logo)) {
-            Storage::disk('local')->delete($existingLogo); 
+
+        if ($request->hasFile('logo')) {
+            $existingLogo = $medparts->logo;
+            if (!empty($existingLogo)) {
+                Storage::disk('local')->delete($existingLogo);
+            }
+
             $picture = uniqid() . '.' . $request->logo->extension();
             $dataupdate['logo'] = $request->file('logo')->store('sponsor');
         }
 
         $save = $medparts->update($dataupdate);
+
         if ($save) {
             toast('Data berhasil diubah!', 'success');
             return redirect()->route('admin.medpart');
         } else {
-            toast('Data gagal ditambahkan!', 'error');
+            toast('Data gagal diubah!', 'error');
             return back()->withInput();
         }
     }

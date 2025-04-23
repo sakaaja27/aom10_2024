@@ -26,6 +26,7 @@ class Transaction extends Model
         "bukti_pembayaran",
         "status",
         "confirmation",
+        "kode_barcode",
         "created_at",
         "updated_at"
     ];
@@ -36,7 +37,7 @@ class Transaction extends Model
         return $this->belongsTo(Ticket::class,'id_ticket');
     }
     public function voucher(){
-        return $this->belongsTo(voucher::class,'id_voucher');
+        return $this->belongsTo(Voucher::class,'id_voucher');
     }
     public function panitia(){
         return $this->belongsTo(Panitia::class,'id_panitia');

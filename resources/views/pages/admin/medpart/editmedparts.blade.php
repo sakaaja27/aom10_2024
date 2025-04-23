@@ -25,9 +25,9 @@
                     @method('patch')
                     <div class="row">
                         <div class="col-12 mb-2 ">
-                            <label class="form-label" for="nama_sponsor">Nama Sponsor</label>
-                                <input type="text" value="{{ $medpart->name }}" class="form-control" id="nama_medpart" name="nama_sponsor"
-                                    placeholder="Masukan Nama Sponsor">
+                            <label class="form-label" for="name">Nama Medpart</label>
+                                <input type="text" value="{{ $medpart->name }}" class="form-control" id="name" name="name"
+                                    placeholder="Masukan Nama Medpart">
                         </div>
                         <div class="col-12  mb-3 ">
                             <label class="form-label" for="example-file-input">Logo Sponsor</label>

@@ -78,16 +78,13 @@
                             <div class="col-6">
                                 <div class="row">
                                     <label for=""><b>ID Transaksi : <b id="IDTransaksi"></b></b></label>
-                                    <label for=""><b>Jenis Ticket : <b id="JenisTicket"></b></b></label>
-                                    <label for=""><b>Metode Pembayaran : <b id="MetodePembayaran"></b></b></label>
+                                   
                                     <label for=""><b>Nama Penonton : <b id="NamaPenonton"></b></b></label>
                                     <label for=""><b>Email Penonton : <b id="EmailPenonton"></b></b></label>
-                                    <label for=""><b>Nomor Telepon : <b id="NomorTelepon"></b></b></label>
-                                    <label for=""><b>Status Konfirmasi :
-                                            <b id="status_konfirmasi"></b>
-                                        </b></label>
+                                   
                                     <label for="" class="mt-1"><b>Status Kehadiran : <b id="status_kehadiran"></b>
                                         </b></label>
+                                    <label for=""><b>Jenis Ticket : <b id="JenisTicket"></b></b></label>
                                     <label for=""><b>Barcode : </b></label>
                                     <div class="text-center">
                                         <img class="img-fluid w-100" src="" id="barcode" alt="">
@@ -104,7 +101,7 @@
                         <button type="button" class="btn btn-sm btn-alt-secondary me-1"
                             data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modalConfirmPresence">Konfirmasi Pembayaran</button>
+                            data-bs-target="#modalConfirmPresence">Konfirmasi Kehadiran</button>
                     </div>
                 </div>
             </div>
@@ -191,41 +188,40 @@
         }
 
         function setvaluemodal(val) {
-            const value = val[0];
             const IDTransaksi = document.getElementById('IDTransaksi');
             const codetransaksi = document.getElementById('codetransaksi');
             const inpcode = document.getElementById('code');
             const JenisTicket = document.getElementById('JenisTicket');
-            const MetodePembayaran = document.getElementById('MetodePembayaran');
+            // const MetodePembayaran = document.getElementById('MetodePembayaran');
             const NamaPenonton = document.getElementById('NamaPenonton');
             const email = document.getElementById('email');
             const EmailPenonton = document.getElementById('EmailPenonton');
-            const NomorTelepon = document.getElementById('NomorTelepon');
-            const status_konfirmasi = document.getElementById('status_konfirmasi');
+            // const NomorTelepon = document.getElementById('NomorTelepon');
+            // const status_konfirmasi = document.getElementById('status_konfirmasi');
             const status_kehadiran = document.getElementById('status_kehadiran');
             const barcode = document.getElementById('barcode');
             const barcodetext = document.getElementById('barcodetext');
             const myModal = new bootstrap.Modal(document.getElementById("modallihatdata"), {});
 
-            if (value.presence != 1) {
-                $(IDTransaksi).html(value.id_transaction);
-                $(codetransaksi).val(value.id_transaction);
-                $(JenisTicket).html(value.ticket.name);
-                $(MetodePembayaran).html(value.payment_method);
-                $(NamaPenonton).html(value.user.name);
-                $(EmailPenonton).html(value.user.email);
-                $(NomorTelepon).html(value.user.telp);
-                $(status_konfirmasi).html(value.confirmation);
-                if (value.confirmation == 2) {
-                    $(status_konfirmasi).html(
-                        '<span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light ">Sudah Di Verifikasi</span>'
-                    );
-                } else {
-                    $(status_konfirmasi).html(
-                        '<span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning">Belum Di Verifikasi</span>'
-                    );
-                }
-                if (value.presence == 1) {
+            if (val.presence != 1) {
+                $(IDTransaksi).html(val.id_transaction);
+                $(codetransaksi).val(val.kode_barcode);
+                $(JenisTicket).html(val.nama_ticket);
+                // $(MetodePembayaran).html(val.payment_method);
+                $(NamaPenonton).html(val.nama_lengkap);
+                $(EmailPenonton).html(val.email);
+                // $(NomorTelepon).html(val.user.telp);
+                // $(status_konfirmasi).html(val.confirmation);
+                // if (val.confirmation == 2) {
+                //     $(status_konfirmasi).html(
+                //         '<span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light ">Sudah Di Verifikasi</span>'
+                //     );
+                // } else {
+                //     $(status_konfirmasi).html(
+                //         '<span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning">Belum Di Verifikasi</span>'
+                //     );
+                // }
+                if (val.presence == 1) {
                     $(status_kehadiran).html(
                         '<span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light ">Sudah Diambil</span>'
                     );
@@ -235,7 +231,7 @@
                     );
                 }
 
-                JsBarcode("#barcode", value.kode_barcode, {
+                JsBarcode("#barcode", val.kode_barcode, {
                     format: "CODE128",
                     lineColor: "#000",
                     width: 5,

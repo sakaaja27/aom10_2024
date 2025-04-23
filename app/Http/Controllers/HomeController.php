@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 
 use App\Models\postingan;
 use App\Models\Ticket;
+use App\Models\Sponsorships;
 use Illuminate\Http\Request;
+use App\Services\PostinganService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 class HomeController extends Controller
 {
@@ -20,13 +23,13 @@ class HomeController extends Controller
     // }
 
 
-    public function index()
-    {
-        $post = postingan::all();
-        $ticket = Ticket::all();
-        
-        return view('index', compact('post', 'ticket'));
-    }
+    public function index(PostinganService $postinganService)
+{
+    $postingans = postingan::orderBy("timestamps", "desc")->take(9)->get();
+    $ticket = Ticket::available()->with("ticket_benefit")->get();
+    $dataSponsor = Sponsorships::all();
+    return view('index', compact('postingans', 'ticket','dataSponsor'));
+}
 
     function sendMedpart()
     {

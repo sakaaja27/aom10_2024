@@ -61,6 +61,7 @@
                                 <th class="text-center" style="width: 70px;">No</th>
                                 <th style="width: 20%;">nama</th>
                                 <th class="d-none d-sm-table-cell" style="width: 20%;">Email</th>
+                                <th class="d-none d-sm-table-cell" style="width: 20%;">Phone</th>
                                 <th class="d-none d-sm-table-cell" style="width: 5%;">Bukti Pembayaran</th>
                                 <th class="d-none d-sm-table-cell" style="width: 15%;">Ticket</th>
                                 <th class="d-none d-sm-table-cell" style="width: 15%;">tanggal pembelian</th>
@@ -69,182 +70,148 @@
                         </thead>
                         <tbody>
                             @foreach ($ticketblmdikonfirms as $ticketblmdikonfirm)
-                                <tr>
-                                    <td class="text-center fs-sm">{{ $loop->iteration }}</td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketblmdikonfirm->user->name }}</td>
-                                    <td class="fw-semibold fs-sm">{{ $ticketblmdikonfirm->user->email }}</td>
-                                    <td class="d-none d-sm-table-cell fs-sm text-center">
-                                        <button type="button" class="btn btn-sm btn-info"
-                                            data-bs-target="#lihatbuktipembayaran" data-bs-toggle="modal">
-                                            <i class="fa fa-fw fa-eye"></i>
-                                        </button>
-                                    </td>
-                                    <td class="d-none d-sm-table-cell">
-                                        {{ $ticketblmdikonfirm->ticket->name }}
-                                    </td>
-                                    <td class="d-none d-sm-table-cell">
-                                        {{ $ticketblmdikonfirm->created_at }}
-                                    </td>
-                                    <td class="d-none d-sm-table-cell">
-                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#konfirmasipembayaran">
-                                            <i class="fa fa-fw fa-check-to-slot"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <div class="modal fade" id="lihatbuktipembayaran" tabindex="-1" role="dialog"
-                                    aria-labelledby="lihatbuktipembayaran" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm modal-dialog-popin" role="document">
-                                        <div class="modal-content">
-                                            <div class="block block-rounded block-transparent mb-0">
-                                                <div class="block-header block-header-default">
-                                                    <h3 class="block-title">bukti pembayaran</h3>
-                                                    <div class="block-options">
-                                                        <button type="button" class="btn-block-option"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa fa-fw fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="block-content fs-sm">
-                                                    <img src="{{ $ticketblmdikonfirm->bukti_pembayaran ? url('storage/'.$ticketblmdikonfirm->bukti_pembayaran) : '#' }}"
-                                                        class="img-fluid" alt="">
-                                                </div>
-                                                <div class="block-content block-content-full text-end bg-body">
-                                                    <button type="button" class="btn btn-sm btn-secondary me-1"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="konfirmasipembayaran" tabindex="-1" role="dialog"
-                                    aria-labelledby="konfirmasipembayaran" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-popin" role="document">
-                                        <div class="modal-content">
-                                            <div class="block block-rounded block-transparent mb-0">
-                                                <div class="block-header block-header-default">
-                                                    <h3 class="block-title">bukti pembayaran</h3>
-                                                    <div class="block-options">
-                                                        <button type="button" class="btn-block-option"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa fa-fw fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="block-content fs-sm ">
-                                                    <img src="{{ $ticketblmdikonfirm->bukti_pembayaran ? url('storage/'.$ticketblmdikonfirm->bukti_pembayaran) : '#' }}"
-                                                        class="img-fluid" alt="">
-                                                </div>
-                                                <div class="block-content block-content-full text-end bg-body">
-                                                    <button type="button" data-bs-toggle="modal"
-                                                        class="btn btn-sm btn-secondary me-1"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" data-bs-toggle="modal"
-                                                        class="btn btn-sm btn-danger me-1"
-                                                        data-bs-target="#tolakpembayaran">Tolak</button>
-                                                    <button type="button" data-bs-toggle="modal"
-                                                        class="btn btn-sm btn-success me-1"
-                                                        data-bs-target="#terimapembayaran">Konfirmasi</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="terimapembayaran" tabindex="-1" role="dialog"
-                                    aria-labelledby="terimapembayaran" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-popin" role="document">
-                                        <div class="modal-content">
-                                            <div class="block block-rounded block-transparent mb-0">
-                                                <div class="block-header block-header-default">
-                                                    <h3 class="block-title">bukti pembayaran</h3>
-                                                    <div class="block-options">
-                                                        <button type="button" class="btn-block-option"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa fa-fw fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="block-content fs-sm ">
-                                                    <b>Apakah Anda Akan Menerima Pembayaran Pembelian tiket Art Of
-                                                        Manunggalan 10 Dari :</b><br>
-                                                    Nama Pembeli : {{ $ticketblmdikonfirm->user->name }} <br>
-                                                    Email : {{ $ticketblmdikonfirm->user->email }} <br>
-                                                    No Telepon : {{ $ticketblmdikonfirm->no_telp }} <br>
-                                                    Tipe Tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
-                                                    Harga Asli Tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
-                                                    Uang Yang Dibayarkan : Rp.{{ $ticketblmdikonfirm->total_prices }} <br>
-                                                </div>
-                                                <div class="block-content block-content-full text-end bg-body">
-                                                    <form
-                                                        action="{{ route('confirm.tiket.penonton', $ticketblmdikonfirm->id_transaction) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('patch')
-                                                        <input type="hidden" value="2" name="status_konfirmasi">
-                                                        <input type="hidden" value="paid" name="status">
-                                                        <button type="button" class="btn btn-sm btn-secondary me-1"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-sm btn-info me-1"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#konfirmasipembayaran">kembali</button>
+<tr>
+    <td class="text-center fs-sm">{{ $loop->iteration }}</td>
+    <td class="fw-semibold fs-sm">{{ $ticketblmdikonfirm->user->name }}</td>
+    <td class="fw-semibold fs-sm">{{ $ticketblmdikonfirm->user->email }}</td>
+    <td class="fw-semibold fs-sm">{{ $ticketblmdikonfirm->no_telp }}</td>
+    <td class="d-none d-sm-table-cell fs-sm text-center">
+        <button type="button" class="btn btn-sm btn-info" data-bs-target="#lihatbuktipembayaran{{ $loop->iteration }}" data-bs-toggle="modal">
+            <i class="fa fa-fw fa-eye"></i>
+        </button>
+    </td>
+    <td class="d-none d-sm-table-cell">{{ $ticketblmdikonfirm->ticket->name }}</td>
+    <td class="d-none d-sm-table-cell">{{ $ticketblmdikonfirm->created_at }}</td>
+    <td class="d-none d-sm-table-cell">
+        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#konfirmasipembayaran{{ $loop->iteration }}">
+            <i class="fa fa-fw fa-check-to-slot"></i>
+        </button>
+    </td>
+</tr>
 
-                                                        <button type="submit" class="btn btn-sm btn-success me-1">Terima
-                                                            Pembayaran</button>
-                                                    </form>
+<div class="modal fade" id="lihatbuktipembayaran{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="lihatbuktipembayaran{{ $loop->iteration }}" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-popin" role="document">
+        <div class="modal-content">
+            <div class="block block-rounded block-transparent mb-0">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">bukti pembayaran</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content fs-sm">
+                    <img src="{{ url('imageslink/' . $ticketblmdikonfirm->bukti_pembayaran) }}" class="img-fluid" alt="">
+                </div>
+                <div class="block-content block-content-full text-end bg-body">
+                    <button type="button" class="btn btn-sm btn-secondary me-1" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="tolakpembayaran" tabindex="-1" role="dialog"
-                                    aria-labelledby="tolakpembayaran" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-popin" role="document">
-                                        <div class="modal-content">
-                                            <div class="block block-rounded block-transparent mb-0">
-                                                <div class="block-header block-header-default">
-                                                    <h3 class="block-title">bukti pembayaran</h3>
-                                                    <div class="block-options">
-                                                        <button type="button" class="btn-block-option"
-                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa fa-fw fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="block-content fs-sm ">
-                                                    <b>Apakah Anda Akan Menolak Pembayaran Pembelian tiket Art Of
-                                                        Manunggalan 10 Dari :</b><br>
-                                                    Nama Pembeli : {{ $ticketblmdikonfirm->user->name }} <br>
-                                                    email : {{ $ticketblmdikonfirm->user->email }} <br>
-                                                    No Telepon : {{ $ticketblmdikonfirm->user->telp }} <br>
-                                                    Tipe Tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
-                                                    Harga Asli Tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
-                                                    Uang Yang Dibayarkan : Rp.{{ $ticketblmdikonfirm->total_prices }} <br>
-                                                </div>
+<div class="modal fade" id="konfirmasipembayaran{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="konfirmasipembayaran{{ $loop->iteration }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-popin" role="document">
+        <div class="modal-content">
+            <div class="block block-rounded block-transparent mb-0">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">bukti pembayaran</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content fs-sm ">
+                    <img src="{{ $ticketblmdikonfirm->bukti_pembayaran ? url('imageslink/' . $ticketblmdikonfirm->bukti_pembayaran) : '#' }}" class="img-fluid" alt="">
+                </div>
+                <div class="block-content block-content-full text-end bg-body">
+                    <button type="button" class="btn btn-sm btn-secondary me-1" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#tolakpembayaran{{ $loop->iteration }}">Tolak</button>
+                    <button type="button" class="btn btn-sm btn-success me-1" data-bs-toggle="modal" data-bs-target="#terimapembayaran{{ $loop->iteration }}">Konfirmasi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                                <div class="block-content block-content-full text-end bg-body">
-                                                    <form
-                                                        action="{{ route('confirm.tiket.penonton', $ticketblmdikonfirm->id_transaction) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('patch')
-                                                        <input type="hidden" value="1" name="status_konfirmasi">
-                                                        <input type="hidden" value="unpaid" name="status">
-                                                        <button type="button" class="btn btn-sm btn-secondary me-1"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-sm btn-info me-1"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#konfirmasipembayaran">kembali</button>
-                                                        <button type="submit" class="btn btn-sm btn-danger me-1">Tolak
-                                                            Pembayaran</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+<div class="modal fade" id="terimapembayaran{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="terimapembayaran{{ $loop->iteration }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-popin" role="document">
+        <div class="modal-content">
+            <div class="block block-rounded block-transparent mb-0">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">bukti pembayaran</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content fs-sm ">
+                    <b>Apakah Anda Akan Menerima Pembayaran Pembelian tiket Art Of Manunggalan 10 Dari :</b><br>
+                    Nama Pembeli : {{ $ticketblmdikonfirm->user->name }} <br>
+                    Email : {{ $ticketblmdikonfirm->user->email }} <br>
+                    No Telepon : {{ $ticketblmdikonfirm->no_telp }} <br>
+                    Tipe Tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
+                    Harga Asli Tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
+                    Uang Yang Dibayarkan : Rp.{{ $ticketblmdikonfirm->total_prices }} <br>
+                </div>
+                <div class="block-content block-content-full text-end bg-body">
+                    <form action="{{ route('confirm.tiket.penonton', $ticketblmdikonfirm->id_transaction) }}" method="POST">
+                        @csrf
+                        @method('patch')
+                        <input type="hidden" value="2" name="status_konfirmasi">
+                        <input type="hidden" value="paid" name="status">
+                        <button type="button" class="btn btn-sm btn-secondary me-1" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#konfirmasipembayaran{{ $loop->iteration }}">kembali</button>
+                        <button type="submit" class="btn btn-sm btn-success me-1">Terima Pembayaran</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tolakpembayaran{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="tolakpembayaran{{ $loop->iteration }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-popin" role="document">
+        <div class="modal-content">
+            <div class="block block-rounded block-transparent mb-0">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">bukti pembayaran</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content fs-sm ">
+                    <b>Apakah Anda Akan Menolak Pembayaran Pembelian tiket Art Of Manunggalan 10 Dari :</b><br>
+                    Nama Pembeli : {{ $ticketblmdikonfirm->user->name }} <br>
+                    email : {{ $ticketblmdikonfirm->user->email }} <br>
+                    No Telepon : {{ $ticketblmdikonfirm->user->telp }} <br>
+                    Tipe Tiket : {{ $ticketblmdikonfirm->ticket->name }} <br>
+                    Harga Asli Tiket : Rp.{{ $ticketblmdikonfirm->ticket->price }} <br>
+                    Uang Yang Dibayarkan : Rp.{{ $ticketblmdikonfirm->total_prices }} <br>
+                </div>
+                <div class="block-content block-content-full text-end bg-body">
+                    <form action="{{ route('confirm.tiket.penonton', $ticketblmdikonfirm->id_transaction) }}" method="POST">
+                        @csrf
+                        @method('patch')
+                        <input type="hidden" value="1" name="status_konfirmasi">
+                        <input type="hidden" value="unpaid" name="status">
+                        <button type="button" class="btn btn-sm btn-secondary me-1" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#konfirmasipembayaran{{ $loop->iteration }}">kembali</button>
+                        <button type="submit" class="btn btn-sm btn-danger me-1">Tolak Pembayaran</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
                         </tbody>
                     </table>
                 </div>

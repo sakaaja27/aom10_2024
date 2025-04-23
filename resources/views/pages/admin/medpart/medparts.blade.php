@@ -82,9 +82,9 @@
                         @csrf
                         <div class="block-content">
                             <div class="mb-2">
-                                <label class="form-label" for="nama_sponsor">Nama Medpart</label>
-                                <input type="text" class="form-control" id="nama_sponsor" name="nama_medpart"
-                                    placeholder="Masukan Nama Sponsor">
+                                <label class="form-label" for="name">Nama Medpart</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Masukan Nama Medpart">
                             </div>
                             <div class="mb-4">
                                 <label class="form-label" for="example-file-input">Logo Sponsor</label>

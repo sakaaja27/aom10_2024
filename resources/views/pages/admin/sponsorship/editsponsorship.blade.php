@@ -25,8 +25,8 @@
                     @method('patch')
                     <div class="row">
                         <div class="col-12 mb-2 ">
-                            <label class="form-label" for="nama_sponsor">Nama Sponsor</label>
-                                <input type="text" value="{{ $sponsorships->name }}" class="form-control" id="nama_sponsor" name="nama_sponsor"
+                            <label class="form-label" for="name">Nama Sponsor</label>
+                                <input type="text" value="{{ $sponsorships->name }}" class="form-control" id="name" name="name"
                                     placeholder="Masukan Nama Sponsor">
                         </div>
                         <div class="col-12 col-md-6 ">
@@ -48,7 +48,7 @@
                         </div>
                         <div class="col-12 text-center ">
                             <h1>Logo Sponsor</h1><br>
-                            <img src="{{ url('storage/'.$sponsorships->logo) }}" width="200" height="200" class="img-thumbnail shadow" alt="">
+                            <img src="{{ url('imageslink/'.$sponsorships->logo) }}" width="200" height="200" class="img-thumbnail shadow" alt="">
                         </div>
                     </div>
                     <div class="text-end">

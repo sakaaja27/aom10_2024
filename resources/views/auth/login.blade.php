@@ -23,26 +23,31 @@
                     <div class="input-box">
 
                         <header>Welcome Back to <span class="text-danger">AOM</span></header>
+                        @if (session('message'))
+                        <div class="alert alert-warning">
+                            {{ session('message') }}
+                        </div>
+                        @endif
                         @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show mx-auto text-xs p-2"
-                                role="alert" id="error-alert">
-                                <div>
-                                    @foreach ($errors->all() as $error)
-                                        <div>{{ $error }}</div>
-                                    @endforeach
-                                </div>
+                        <div class="alert alert-danger alert-dismissible fade show mx-auto text-xs p-2"
+                            role="alert" id="error-alert">
+                            <div>
+                                @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                                @endforeach
                             </div>
-                            <script>
-                                setTimeout(function() {
-                                    document.getElementById('error-alert').classList.remove('show');
-                                    document.getElementById('error-alert').classList.add('hide');
-                                    // Reset styles and classes to original state
-                                    document.getElementById('error-alert').style.display = 'none';
-                                    document.getElementById('error-alert').classList.remove('alert-danger');
-                                    document.getElementById('error-alert').classList.remove('alert-dismissible');
-                                    document.getElementById('error-alert').classList.remove('fade');
-                                }, 2000);
-                            </script>
+                        </div>
+                        <script>
+                            setTimeout(function() {
+                                document.getElementById('error-alert').classList.remove('show');
+                                document.getElementById('error-alert').classList.add('hide');
+                                // Reset styles and classes to original state
+                                document.getElementById('error-alert').style.display = 'none';
+                                document.getElementById('error-alert').classList.remove('alert-danger');
+                                document.getElementById('error-alert').classList.remove('alert-dismissible');
+                                document.getElementById('error-alert').classList.remove('fade');
+                            }, 2000);
+                        </script>
                         @endif
                         <form action="{{ route('login') }}" method="post">
                             @csrf
@@ -51,9 +56,9 @@
                                     name="email" required="" autocomplete="off">
                                 <label for="name">Email</label>
                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                             <div class="input-field">
@@ -61,18 +66,16 @@
                                     id="pass" name="password" required="">
                                 <label for="pass">Password</label>
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                             <div class="forgot">
                                 <span>
-
-                                    Lupa kata sandi?<a class="" href="">
+                                    Lupa kata sandi?<a class="" href="{{ route('password.request') }}">
                                         Klik disini
                                     </a>
-
                                 </span>
                             </div>
                             <div class="input-field">

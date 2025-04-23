@@ -50,6 +50,30 @@
                 <!-- END New Customers -->
             </div>
             <div class="col-sm-6 col-xxl-3">
+                <!-- New Customers -->
+                <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                    @foreach($transaksiperhari as $item)
+                    <div
+                        class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
+                        <dl class="mb-0">
+                            <dt class="fs-3 fw-bold">{{ $item["name"] }}</dt>
+                            <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Jumlah Penjualan: {{$item["jumlah"]}} </dd>
+                        </dl>
+                        <div class="item item-rounded-lg bg-body-light">
+                            <i class="fas fa-check fs-3 text-primary"></i>
+                        </div>
+                    </div>
+                    @endforeach
+                  
+                    <div class="bg-body-light rounded-bottom">
+                        <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between">
+                            <span>Jumlah Penjualan Perhari Yang Sudah Dikonfirmasi</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- END New Customers -->
+            </div>
+            <div class="col-sm-6 col-xxl-3">
                 <!-- Messages -->
                 <div class="block block-rounded d-flex flex-column h-100 mb-0">
                     <div
@@ -73,6 +97,26 @@
                 <!-- END Messages -->
             </div>
         </div>
+        <table class="table table-hover table-bordered  table-vcenter js-dataTable-full-pagination">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 70px;">No</th>
+                    <th class="d-none d-sm-table-cell" style="width: 40%;">Nama Ticket</th>
+                    <th class="d-none d-sm-table-cell" style="width: 25%;">Total Penjualan</th>
+                    <th class="d-none d-sm-table-cell" style="width: 25%;">Transaksi Terakhir</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($penjualanticket as $item)
+                    <tr>
+                        <td class="text-center fs-sm">{{ $loop->iteration }}</td>
+                        <td class="fw-semibold fs-sm">{{ $item->name_ticket }}</td>
+                        <td class="fw-semibold fs-sm">{{ $item->transaction_count }}</td>
+                         <td class="fw-semibold fs-sm">{{ $item->last_transaction }}</td>
+                    </tr>
+                    @endforeach
+            </tbody>
+        </table>
         <!-- END Overview -->
     </div>
     <!-- END Page Content -->

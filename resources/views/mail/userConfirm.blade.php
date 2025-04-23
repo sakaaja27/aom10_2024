@@ -112,7 +112,9 @@
                                 <td style="text-align:center;padding: 0 30px 20px">
                                     <p style="margin-bottom: 25px;"><b>{{ $data['text3'] }}</b></p>
                                     {{-- <a href="#" style="background-color:#fca311;border-radius:4px;color:#ffffff;display:inline-block;font-size:13px;font-weight:600;line-height:44px;text-align:center;text-decoration:none;text-transform: uppercase; padding: 0 25px">Reset Password</a> --}}
+                                     @if($data["url"] != "")
                                     <a href="{{ $data['url'] }}" style="background-color:{{ $data['color'] }};border-radius:4px;color:#ffffff;display:inline-block;font-size:13px;font-weight:600;line-height:44px;text-align:center;text-decoration:none;text-transform: uppercase; padding: 0 25px">{{ $data['button'] }}</a>
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>

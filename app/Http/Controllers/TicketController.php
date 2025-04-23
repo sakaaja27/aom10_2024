@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Panitia;
+use App\Models\OfflineTransaction;
 use App\Models\Ticket;
 use App\Models\ticket_benefits;
 use App\Models\Transaction;
 use App\Models\Voucher;
+use App\Services\TransactionService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
@@ -41,7 +44,6 @@ class TicketController extends Controller
             'quantity' => 'required',
             'benefit_ticket' => 'required',
         ]);
-        // dd($request->benefit_ticket);
 
         $create = Ticket::create($request->all());
         foreach ($request->benefit_ticket as $key => $value) {
@@ -141,12 +143,15 @@ class TicketController extends Controller
         try {
             $id_transaction = Str::uuid();
             $userId = Auth::user()->id;
+            $currentDate = now()->format('Y-m-d');
 
             // Collect request data
             $paymentMethod = $req->payment_method;
             $ticketName = $req->nama_ticket;
             $voucherCode = $req->kode_voucher;
             $panitiaId = $req->kode_panitia;
+            // $panitiaId = null;
+
 
             // Initialize data array
             $data = [
@@ -163,8 +168,8 @@ class TicketController extends Controller
             ];
 
             // Fetch ticket and voucher data
-            $searchTicket = Ticket::where('name', $ticketName)->first();
-            $searchVoucher = Voucher::where('kode', $voucherCode)->first();
+            $searchTicket = Ticket::where('name', $ticketName)->available()->first();
+            $searchVoucher = Voucher::where('kode', $voucherCode)->where('quantity', '>', 0)->whereDate('start_date', '<=', $currentDate)->whereDate('end_date', '>=', $currentDate)->first();
             $searchPanitia = Panitia::where('id_panitia', $panitiaId)->first();
 
             // Update data with ticket and voucher details
@@ -199,8 +204,12 @@ class TicketController extends Controller
 
             return redirect()->route('verifikasiPembayaran', ['id' => $id_transaction]);
         } catch (QueryException $e) {
-            dd($e);
-            toast('Error', 'An error occurred while processing your request.');
+            if ($e->getCode() === '45000') {
+             Alert::error("Failed", "Pembelian Tiket Telah Mencapai Limit");
+            }else {
+
+            Alert::error('Failed', 'Terjadi Kesalahan Saat Memproses Permintaan');
+            }
             // Log the exception and return an error response
             return redirect()->back();
         }
@@ -212,9 +221,8 @@ class TicketController extends Controller
     private function calculateAdminFee($paymentMethod)
     {
         $fees = [
-            'bri' => 2500,
-            'mandiri_va' => 2500,
-            'bca' => 2500,
+            'mandiri' => 0,
+            'bca' => 0,
         ];
 
         return $fees[$paymentMethod] ?? null; // Return null for unknown methods
@@ -226,11 +234,15 @@ class TicketController extends Controller
             "bukti_pembayaran"=> 'required|image|mimes:jpg,png,jpeg|max:2048'
         ]);
         if($req->hasFile("bukti_pembayaran")){
-            $transaction->update(
-                [
-                    "bukti_pembayaran" => $req->file("bukti_pembayaran")->store("images/bukti_pembayaran", "public"),
-                ]
-            );
+            if($transaction->bukti_pembayaran != null)
+            {
+                Storage::disk('public')->delete($transaction->bukti_pembayaran);
+            }
+            $transaction->update([
+                 "confirmation" => 0,
+                 "bukti_pembayaran" => $req->file("bukti_pembayaran")->store("images/bukti_pembayaran", "public"),
+                 "created_at" => now()
+            ]);
         }
         return redirect()->back();
     }
@@ -238,7 +250,62 @@ class TicketController extends Controller
     
     function verifikasi($id_ticket)
     {
-        $data = Transaction::with('user', 'ticket')->where('id_transaction', '=', $id_ticket)->first();
-        return view('verifikasi', compact('data'));
+         $data = Transaction::with('user', 'ticket')->where('id_transaction', '=', $id_ticket)->where("id_user", '=', Auth::user()->id)->first();
+         if ($data) {
+            $bundleTicket = null;
+
+            if (Str::contains($data->ticket->sales_in, 'Bundle') && $data->confirmation == 2) {
+                $kode_unique = Str::slug($data->ticket->name) . "_" . $id_ticket;
+                $bundleTicket = OfflineTransaction::where('tempat_penjualan', $kode_unique)->get();
+            }
+
+
+            return view('verifikasi', compact('data', 'bundleTicket'));
+        }
+        return redirect()->route('home');
+    }
+    function bundleEmail(Request $req, $id_ticket, TransactionService $transactionService) {
+        $data = Transaction::with('user', 'ticket')->where('id_transaction', '=', $id_ticket)->where("id_user", '=', Auth::user()->id)->first();
+        $minMaxCount = (int) Str::before($data->ticket->name, " "); // Extract the number from the ticket name
+
+        $validator = Validator::make($req->all(), [
+            "email_bundle" => "required|array|min:$minMaxCount|max:$minMaxCount", // Ensure the array has the exact count of items
+            "email_bundle.*" => "email", // Validate each item in the array is a valid email
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        if ($data) {
+            $kode_unique = null;
+            if (Str::contains($data->ticket->sales_in, 'Bundle') && $data->confirmation == 2) {
+                $kode_unique = Str::slug($data->ticket->name) . "_" . $id_ticket;
+            }
+            if(count(array_filter($req->email_bundle)) == $minMaxCount)
+            {
+                foreach($req->email_bundle as $email)
+                {
+                    $item = [
+                        "nama_lengkap" => $data->user->name,
+                        "email" => $email,
+                        "nama_ticket" => Str::afterLast($data->ticket->name, " "),
+                        "kode_barcode" => Str::random(10),
+                        "tempat_penjualan" => $kode_unique,
+                        "status" => "belum"
+                    ];
+                    
+                    $id_offline = OfflineTransaction::create($item)->id;
+                    $item["id"] = $id_offline;
+                    $transactionService->sendOfflineTransactionEmail($item);
+                }
+                
+                return redirect()->route("verifikasiPembayaran", $id_ticket);
+            }
+            return redirect()->back()->withInput();
+        }
+    }
+    
+    function listticket() {
+         $data = Transaction::with('user', 'ticket')->where('id_user', '=', Auth::user()->id)->get();
+        return view('listticket',compact('data'));
     }
 }

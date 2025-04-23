@@ -114,21 +114,26 @@ class VoucherController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id_voucher,VoucherService $voucherService)
+    public function destroy($id_voucher, VoucherService $voucherService)
     {
         $cek = $voucherService->deletevoucher($id_voucher);
-        if($cek){
+        if ($cek) {
             toast('Data berhasil dihapus!', 'success');
             return redirect()->route('Voucher.index');
-        }else{
+        } else {
             toast('Data gagal dihapus!', 'error');
             return redirect()->route('Voucher.index');
         }
-
     }
     public function getData($id)
     {
-        $data = Voucher::where(['kode' => $id])->first();
+        $currentDate = now()->format('Y-m-d');
+
+        $data = Voucher::where('kode', $id)
+            ->where('quantity', '>', 0)
+            ->whereDate('start_date', '<=', $currentDate)
+            ->whereDate('end_date', '>=', $currentDate)
+            ->first();
         return response()->json(["data" => $data]);
     }
 }

@@ -45,7 +45,7 @@
                                 <td class="fs-sm text-center">{{ $sponsorship->name }}</td>
                                 <td class="fw-semibold fs-sm">{{ $sponsorship->sponsorshipcategories->name }}</td>
                                 <td class="fw-semibold fs-sm"><img width="150" height="150" lazy class="img-thumbnail"
-                                        src="{{ url('storage/' . $sponsorship->logo) }}" alt=""></td>
+                                        src="{{ url('imageslink/' . $sponsorship->logo) }}" alt=""></td>
                                 <td class="text-center">
                                     <form action="{{ route('admin.sponsorship.destroy', $sponsorship->id) }}"
                                         onsubmit="return confirmDelete()"
@@ -90,8 +90,8 @@
                         @csrf
                         <div class="block-content">
                             <div class="mb-2">
-                                <label class="form-label" for="nama_sponsor">Nama Sponsor</label>
-                                <input type="text" class="form-control" id="nama_sponsor" name="nama_sponsor"
+                                <label class="form-label" for="name">Nama Sponsor</label>
+                                <input type="text" class="form-control" id="name" name="name"
                                     placeholder="Masukan Nama Sponsor">
                             </div>
                             <div class="mb-2">

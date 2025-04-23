@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\transactionService;
+use App\Services\TransactionService;
+use App\Models\OfflineTransaction;
 use App\Services\UserService;
-use App\Models\transaction;
+use App\Models\BelumBayar;
+use App\Models\Transaction;
 use Auth;
 use Midtrans\Snap;
 use Midtrans\Config;
@@ -47,8 +49,8 @@ class AdminPenontonController extends Controller
         $dataEmail = [
             'name' =>   $data->user->name,
             'email' => $data->user->email,
-            'url' => route('home')
-        ];
+            'url' => route('verifikasiPembayaran', $data->id_transaction)
+        ]; 
         // check confirm code
         switch ($confirmCode):
             case 1:
@@ -65,4 +67,22 @@ class AdminPenontonController extends Controller
 
         return redirect()->back();
     }
+    
+    public function sendOfflineTransactionEmail(transactionService $transactionService)
+    {
+        $offline = OfflineTransaction::where("status", "belum")->take(50)->get();
+        foreach($offline as $item){
+            $transactionService->sendOfflineTransactionEmail($item);
+        }
+        // return redirect()->back();
+    }
+    public function sendBelumBayarEmail(transactionService $transactionService)
+    {
+        $belum = BelumBayar::where("status", "0")->take(50)->get();
+        foreach($belum as $item){
+            $transactionService->sendBelumBayarEmail($item);
+        }
+        // return redirect()->back();
+    }
+
 }

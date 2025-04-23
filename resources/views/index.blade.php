@@ -30,18 +30,19 @@
     <header>
         <nav class="navbar navbar-expand-lg  ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
-                <a class="navbar-brand text-white" href="index.html"><img src="images/aom.png" width="100px"></a>
+                <a class="navbar-brand text-white" href="/"><img src="images/aom.png" width="100px"></a>
                 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#ftco-nav"
                     aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
                 </button>
 
-                <div class="collapse navbar-collapse text-warning" id="ftco-nav">
+                <div class="collapse navbar-collapse text-warning " id="ftco-nav">
                     <ul class="navbar-nav mx-auto">
-                        <li class="nav-item "><a href="#" class="nav-link">Home</a></li>
+                        <li class="nav-item "><a href="/" class="nav-link">Home</a></li>
                         <li class="nav-item"><a href="#GuestStar" class="nav-link">GuestStar</a></li>
                         <!--  -->
                         <li class="nav-item"><a href="#ticket" class="nav-link">Ticket</a></li>
+                        <li class="nav-item"><a href="{{ route('listticket') }}" class="nav-link">List Ticket</a></li>
                     </ul>
 
                     <ul class="navbar-nav mx-end">
@@ -143,17 +144,10 @@
                         <div class="item">
                             <div class="speaker">
                                 <div class="image-container">
-                                    <img src="images/star1.jpg" class="img-fluid" alt="Colorlib HTML5 Template">
+                                    <img src="images/WebFiersa.png" class="img-fluid" alt="Colorlib HTML5 Template">
                                     <div class="text-overlay">
-                                        <h3>Mr.Robby Uhuyy </h3>
-                                        <ul class="ftco-social mt-3">
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-twitter"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-facebook"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-instagram"></span></a></li>
-                                        </ul>
+                                        <h3>Fiersa Besari</h3>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -162,74 +156,36 @@
                         <div class="item">
                             <div class="speaker">
                                 <div class="image-container">
-                                    <img src="images/star2.jpg" class="img-fluid" alt="Colorlib HTML5 Template">
+                                    <img src="images/WebUpcoustic.png" class="img-fluid" alt="Colorlib HTML5 Template">
                                     <div class="text-overlay">
-                                        <h3>Mr.Firzy SIUUU</h3>
-                                        <ul class="ftco-social mt-3">
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-twitter"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-facebook"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-instagram"></span></a></li>
-                                        </ul>
+                                        <h3>UpCoustic</h3>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                         <div class="item">
+                            <div class="speaker">
+                                <div class="image-container">
+                                    <img src="images/WebSunday.png" class="img-fluid" alt="Colorlib HTML5 Template">
+                                    <div class="text-overlay">
+                                        <h3>Sunday Groove </h3>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="item">
-                            <div class="speaker">
-                                <div class="image-container">
-                                    <img src="images/star3.jpg" class="img-fluid" alt="Colorlib HTML5 Template">
-                                    <div class="text-overlay">
-                                        <h3>Mrs. Amal Metal dari lahir</h3>
-                                        <ul class="ftco-social mt-3">
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-twitter"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-facebook"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-instagram"></span></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       
 
                         <div class="item">
                             <div class="speaker">
                                 <div class="image-container">
-                                    <img src="images/star4.jpg" class="img-fluid" alt="Colorlib HTML5 Template">
+                                    <img src="images/WebIksan.png" class="img-fluid" alt="Colorlib HTML5 Template">
                                     <div class="text-overlay">
-                                        <h3>Mr.Gilang Lambada</h3>
-                                        <ul class="ftco-social mt-3">
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-twitter"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-facebook"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-instagram"></span></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="speaker">
-                                <div class="image-container">
-                                    <img src="images/star5.jpg" class="img-fluid" alt="Colorlib HTML5 Template">
-                                    <div class="text-overlay">
-                                        <h3>Duo Sejoli Icikiwir</h3>
-                                        <ul class="ftco-social mt-3">
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-twitter"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-facebook"></span></a></li>
-                                            <li class="ftco-animate"><a href="#"><span
-                                                        class="icon-instagram"></span></a></li>
-                                        </ul>
+                                        <h3>Iksan Skuter</h3>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -239,8 +195,25 @@
             </div>
         </div>
     </section>
-    {{-- stage --}}
-    {{-- <section class="ftco-section" id="ticket">
+    <section class="ftco-section" id="playlist">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-7 text-center heading-section ftco-animate">
+                    <div class="text-center">
+                        <div class="wm wow slideInUp animated">PLAYLIST</div>
+                        <h2 class="wow fadeInUp text-white" data-wow-delay=".2s"><span class="id-color"></span>
+                            PLAYLIST</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 ftco-animate text-center">
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3K3JK8CAbcv1nHTwFb2Jku?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+     <section class="ftco-section" id="stage">
         <div class="container">
             <div class="row justify-content-center mb-5 pb-3">
                 <div class="col-md-7 text-center heading-section ftco-animate">
@@ -248,14 +221,17 @@
                         <div class="wm wow slideInUp animated">STAGE</div>
                         <h2 class="wow fadeInUp text-white" data-wow-delay=".2s"><span class="id-color"></span>
                             STAGE</h2>
-                        <div class="small-border bg-color-2"></div>
-                        <div class="spacer-single"></div>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 ftco-animate text-center">
+                    <img src="{{ asset('images\stage-glow.png') }}" class="img-fluid wow fadeInUp" style="border-radius: 20px" width="70%">
+                </div>
+            </div>
         </div>
-    </section> --}}
-    {{-- end --}}
+    </section>
+    
     <section class="ftco-section" id="ticket">
         <div class="container">
             <div class="row justify-content-center mb-5 pb-3">
@@ -286,11 +262,9 @@
                                     </div>
                                     <div class="bottom">
                                         <ul>
-                                            <li><i class="fa-solid fa-check mr-3"></i></i>Dapat ituu ya itu dah</li>
-                                            <li><i class="fa-solid fa-check mr-3"></i></i>Dapat ituu ya itu dah</li>
-                                            <li><i class="fa-solid fa-check mr-3"></i></i>Dapat ituu ya itu dah</li>
-                                            <li><i class="fa-solid fa-xmark mr-3"></i><s>Ga dapat ituu </s></li>
-                                            <li><i class="fa-solid fa-xmark mr-3"></i><s>Ga dapat ituu</s></li>
+                                              @foreach($item->ticket_benefit as $benefit)
+                                            <li><i class="fa-solid fa-check mr-3"></i></i>{{$benefit->name}}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                     <div class="action text-center">
@@ -329,7 +303,7 @@
                 </div>
             </div>
             <div class="row g-custom-x carousel-testimony owl-carousel">
-                @foreach ($post as $item)
+                 @foreach ($postingans as $item)
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="post mb-sm-30 wow flipInY">
                             <blockquote class="instagram-media" data-instgrm-permalink="{{ $item->permalink }}"
@@ -446,13 +420,18 @@
                     </div>
                 </div>
             </div>
+            <!--@foreach ($dataSponsor->slice(0, 3) as $data)-->
+       
+            <!--            <img class="p-4" height="150" src="{{ asset('imageslink/'. $data->logo) }}" alt=""-->
+            <!--                data-aos="zoom-in" data-aos-delay="100">-->
+            <!--        @endforeach-->
             <div class="card text-center">
                 <div class="card-header bg-dark text-white">
                     <strong>Open Sponsorship</strong>
                 </div>
                 <div class="card-body bg-secondary">
                     <h5 class="card-title text-white">Call the number below.</h5>
-                    <p class="card-text text-white">Tiara : 0123456789</p>
+                    <p class="card-text text-white">Tiara : +62 881-0364-57089</p>
                     <form action="{{ route('contactSponsor') }}" method="post">
                         @csrf
                         <button type="submit" class="btn btn-success">Click to the WhatsApp</button>
@@ -483,7 +462,7 @@
                     </div>
                     <div class="card-body bg-secondary">
                         <h5 class="card-title text-white">Call the number below.</h5>
-                        <p class="card-text text-white">Evi : 0123456789</p>
+                        <p class="card-text text-white">Evi : +62 812-1712-6005</p>
                         <form action="{{ route('contactMedpart') }}" method="post">
                             @csrf
                             <button type="submit" class="btn btn-success">Click to the WhatsApp</button>
@@ -538,9 +517,7 @@
                             <li><i class="bx bx-chevron-right"></i> <a href="https://www.jti.polije.ac.id"
                                     class="text-white">Jurusan Teknologi
                                     Informasi POLIJE</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="https://www.instagram.com/bempolije"
-                                    class="text-white">BEM KM
-                                    POLIJE</a></li>
+                            
                             <li><i class="bx bx-chevron-right"></i> <a href="https://www.hmjtipolije.com"
                                     class="text-white">Himpunan Mahasiswa
                                     Jurusan Teknologi Informasi</a></li>
@@ -589,13 +566,14 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                                    <b><span class="text-danger">*: WAJIB DIISI</span></b>
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title text-center">Transaction</h5>
                                     <div class="row">
                                         <div class="form-group row text-dark">
                                             <label for="staticEmail"
-                                                class="col-sm-4 col-5 col-form-label text-wrap">Username</label>
+                                                class="col-sm-4 col-5 col-form-label text-wrap">Username <span class="text-danger">*</span></label>
                                             <div class="col-sm-8 col-7">
                                                 <p class="form-control-plaintext text-end">
                                                     @if (Auth::check())
@@ -609,12 +587,12 @@
                                         <div class="form-group row text-dark">
                                             <label for="staticEmail"
                                                 class="col-sm-4 col-5 col-form-label text-wrap">No
-                                                HP<span class="text-danger">*</span></label>
+                                                HP <span class="text-danger">*</span></label>
                                             <div class="col-sm-8 col-7">
                                                 <div class="form-group">
                                                     <div class="input-group input-group-sm">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            name="no_telp" placeholder="Masukan Nomor HP">
+                                                        <input type="number" class="form-control form-control-sm"
+                                                            name="no_telp" minlength="10" maxlength="14" placeholder="Masukan Nomor HP">
                                                     </div>
                                                 </div>
                                             </div>
@@ -624,7 +602,7 @@
                                         <div class="form-group row text-dark">
                                             <label for="staticEmail"
                                                 class="col-sm-4 col-5 col-form-label text-wrap">Nama
-                                                Ticket<span class="text-danger">*</span></label>
+                                                Ticket <span class="text-danger">*</span></label>
                                             <div class="col-sm-8 col-7">
                                                 <div class="form-group">
                                                     <div class="input-group input-group-sm">
@@ -640,7 +618,7 @@
                                     <div class="row">
                                         <div class="form-group row text-dark">
                                             <label for="staticEmail"
-                                                class="col-sm-4 col-5 col-form-label text-wrap">Code
+                                                class="col-sm-4 col-5 col-form-label text-wrap">Kode
                                                 Panitia</label>
                                             <div class="col-sm-8 col-7">
                                                 <div class="form-group">
@@ -664,7 +642,7 @@
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label class="card-text text-dark" for="kode_voucher">
-                                            Code Voucher :
+                                            Kode Voucher :
                                         </label>
                                         <input type="text" class="form-control form-control-sm mb-2"
                                             name="kode_voucher" id="kode_voucher">
@@ -676,13 +654,12 @@
                             </div>
                             <div class="card mt-3">
                                 <div class="card-body">
-                                    <label for="formFile" class="form-label text-dark">Pilih Metode Pembayaran</label>
+                                    <label for="formFile" class="form-label text-dark">Pilih Metode Pembayaran <span class="text-danger">*</span></label>
                                     <select class="form-control form-control-sm" name="payment_method"
                                         id="payment-method" required>
                                         <option hidden>-- Pilih Metode Pembayaran --</option>
-                                        <option value="bri">BRI 023892323298323 (A.n Louis Hessel John)</option>
-                                        <option value="bca">BCA 293283832 (A.n Keofjeofje)</option>
-                                        <option value="mandiri">Mandiri 023232032334 (A.n kelkerkref)</option>
+                                        <option value="bca">BCA: 6025039037 (a/n Retasya Salsabila Putri) </option>
+                                        <option value="mandiri">Mandiri: 1430031618307 (a/n Retasya Salsabila Putri)</option>
                                     </select>
                                 </div>
                             </div>
@@ -789,7 +766,6 @@
                 currency: 'IDR'
             });
 
-            // Utility functions
             function parseCurrency(currencyString) {
                 return parseFloat(currencyString.replace(/Rp\s*/, '').replace(/\./g, '').replace(/,/g, '.'));
             }
@@ -805,11 +781,9 @@
             function handleAjaxError(jqXHR, textStatus, errorThrown) {
             }
 
-            // Initial setup
             updateText("#biayaAdmin", 0);
             updateText("#hargaDiskon", 0);
 
-            // Event handlers
             $("#submitPanitia").click(function() {
                 const idPanitia = $("#kode_panitia").val();
                 $.get(`getPanitia/${idPanitia}`)
@@ -830,9 +804,8 @@
             $("#payment-method").change(function() {
                 const idMethod = $(this).val();
                 const methodToAdmin = {
-                    "bri": 2500,
-                    "bca": 2500,
-                    "mandiri": 2500,
+                    "bca": 0,
+                    "mandiri": 0,
                 };
 
                 if (methodToAdmin.hasOwnProperty(idMethod)) {

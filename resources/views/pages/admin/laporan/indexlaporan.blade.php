@@ -77,6 +77,22 @@
                             <option value="0">Belum Diambil</option>
                         </select>
                     </div>
+                    <!-- Filter Tanggal -->
+                    <div class="form-group">
+                        <label for="tanggal">Tanggal Start</label>
+                        <input type="date" name="tanggal" id="tanggal" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggal_end">Tanggal End</label>
+                        <input type="date" name="tanggal_end" id="tanggal_end" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="presence_filter">Tipe Transaksi</label>
+                        <select name="transaction_type" id="presence_filter" class="form-control">
+                            <option value="offline">Offline</option>
+                            <option value="website">Website</option>
+                        </select>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

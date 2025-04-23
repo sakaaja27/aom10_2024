@@ -10,9 +10,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminSponsorshipsController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\PanitiaController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\AdminTicketingController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PostinganController;
@@ -30,11 +30,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
+//Auth::routes(['verify' => true]);
+Route::get('/home', [HomeController::class, 'index'])->middleware(['auth']);
 Route::prefix('/')
-    ->middleware(['auth', 'is_user', 'verified'])
+    ->middleware(['auth','verified'])
     ->group(function () {
         Route::post('contactMedpart', [HomeController::class, 'sendMedpart'])->name('contactMedpart');
         Route::post('contactSponsor', [HomeController::class, 'sendSponsorship'])->name('contactSponsor');
+        Route::get("listticket", [TicketController::class, 'listticket'])->name('listticket');
 
         Route::get("verifikasiPembayaran/{id}", [TicketController::class, 'verifikasi'])->name('verifikasiPembayaran');
 
@@ -44,6 +47,7 @@ Route::prefix('/')
         Route::get("getPanitia/{id}", [PanitiaController::class, "getData"])->name("getPanitia");
         Route::get("getVoucher/{id}", [VoucherController::class, "getData"])->name("getVoucher");
         Route::patch("uploadPembayaran/{id}", [TicketController::class, "formPembayaran"])->name("uploadPembayaran");
+        Route::post('submitBundleEmail/{id}', [TicketController::class, "bundleEmail"])->name("bundleEmail");
         Route::post('buyTicket', [TicketController::class, "buyTicket"])->name('buyTicket');
     });
 
@@ -53,11 +57,17 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'loginmethod');
     Route::post('/register', 'registermethod')->name('registermethod');
     Route::post('/logout', 'logoutmethod')->name('logout');
+    
+    // Lupa Kata Sandi (Reset Password)
+    Route::get('/forgot-password', 'showForgotPasswordForm')->name('password.request');
+    Route::post('/forgot-password', 'sendResetLinkEmail')->name('password.email');
+    Route::get('/reset-password/{token}', 'showResetForm')->name('password.reset');
+    Route::post('/reset-password', 'resetPassword')->name('password.update');
 });
 
 
 Route::prefix('admin')
-    ->middleware(['auth', 'is_admin', 'verified'])
+    ->middleware(['auth','is_admin'])
     ->group(function () {
         // dashboard
         Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
@@ -65,6 +75,15 @@ Route::prefix('admin')
             Route::get('/Penonton', 'index')->name('index.penonton');
             Route::get('/Penonton/Ticket/{id}', 'getticketpenonton')->name('tiket.penonton');
             Route::patch('/Penonton/{id}', 'confirm')->name('confirm.tiket.penonton');
+            Route::get("/Penonton/OfflineTransaction", "sendOfflineTransactionEmail"); 
+            Route::get("/Penonton/BelumBayar", "sendBelumBayarEmail");
+
+        });
+        Route::controller(AdminTicketingController::class)->group(function () {
+            Route::get('/OfflineTicketing', 'index')->name('index.ticketing');
+            Route::post("/storeTicketing", "store")->name("store.ticketing");
+            Route::post("/resendMail/{id}", "resendMail")->name("resendMail.ticketing");
+
         });
         Route::controller(LaporanController::class)->group(function () {
             Route::get('/Laporan', 'index')->name('Laporan.index');
@@ -104,7 +123,5 @@ Route::prefix('admin')
         Route::resource('Ticket', TicketController::class);
         Route::resource('Voucher', VoucherController::class);
 
-        // webhook
-        Route::post('/midtrans/webhook',[MidtransController::class,'handleWebhook'])->name('midtrans');
     });
 
